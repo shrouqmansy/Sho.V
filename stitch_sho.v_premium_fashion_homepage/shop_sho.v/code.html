@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sho.V - Shop All</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&amp;family=Playfair+Display:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#f6dec7",
+                        "on-secondary-container": "#73614f",
+                        "on-secondary-fixed-variant": "#544433",
+                        "on-background": "#1b1c1c",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#292a27",
+                        "surface": "#fbf9f9",
+                        "on-primary-fixed": "#1b1c1c",
+                        "on-tertiary-fixed-variant": "#464744",
+                        "secondary-container": "#f6dec7",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#5f5e5e",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#474746",
+                        "surface-bright": "#fbf9f9",
+                        "inverse-primary": "#c8c6c5",
+                        "inverse-on-surface": "#f2f0f0",
+                        "surface-container": "#efeded",
+                        "surface-variant": "#e4e2e2",
+                        "on-tertiary-fixed": "#1b1c19",
+                        "primary-container": "#2a2a2a",
+                        "secondary": "#6d5b49",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f5f3f3",
+                        "tertiary-fixed-dim": "#c7c7c2",
+                        "inverse-surface": "#303031",
+                        "on-tertiary-container": "#91918d",
+                        "on-primary-container": "#929191",
+                        "on-surface": "#1b1c1c",
+                        "on-surface-variant": "#444748",
+                        "tertiary": "#141613",
+                        "primary-fixed": "#e4e2e1",
+                        "on-secondary": "#ffffff",
+                        "background": "#fbf9f9",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c4c7c7",
+                        "surface-container-high": "#e9e8e7",
+                        "primary": "#151616",
+                        "surface-container-highest": "#e4e2e2",
+                        "on-secondary-fixed": "#25190b",
+                        "tertiary-fixed": "#e3e3de",
+                        "outline": "#747878",
+                        "surface-dim": "#dbdad9",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "secondary-fixed-dim": "#d9c3ac"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "120px",
+                        "margin-mobile": "20px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "container-max": "1440px",
+                        "margin-desktop": "80px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"],
+                        "body-md": ["Montserrat"],
+                        "body-lg": ["Montserrat"],
+                        "label-caps": ["Montserrat"],
+                        "button": ["Montserrat"],
+                        "headline-sm": ["Playfair Display"],
+                        "display-lg-mobile": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.15em", "fontWeight": "600" }],
+                        "button": ["14px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.2", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed font-body-md text-body-md">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface w-full top-0 sticky z-50 border-b border-outline-variant/30">
+<div class="flex flex-col items-center w-full px-margin-mobile md:px-margin-desktop py-unit max-w-container-max mx-auto">
+<div class="flex items-center justify-between w-full h-16">
+<!-- Mobile Menu Button -->
+<button class="md:hidden p-2 text-on-surface-variant hover:opacity-70 transition-opacity duration-300">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<!-- Navigation Links (Desktop) -->
+<nav class="hidden md:flex items-center space-x-8 font-label-caps text-label-caps">
+<a class="text-primary font-bold border-b border-primary pb-1 transition-all duration-200" href="#">Shop</a>
+<a class="text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300" href="#">New In</a>
+<a class="text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300" href="#">Sale</a>
+<a class="text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300" href="#">About</a>
+<a class="text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300" href="#">Contact</a>
+</nav>
+<!-- Brand Logo -->
+<div class="font-display-lg text-headline-md tracking-tighter text-primary dark:text-primary-fixed md:absolute md:left-1/2 md:-translate-x-1/2">
+                    Sho.V
+                </div>
+<!-- Trailing Icons -->
+<div class="flex items-center space-x-4 text-on-surface-variant">
+<button class="hidden md:block p-2 hover:opacity-70 transition-opacity duration-300 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+</button>
+<button class="p-2 hover:opacity-70 transition-opacity duration-300 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="hidden md:block p-2 hover:opacity-70 transition-opacity duration-300 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+<button class="p-2 hover:opacity-70 transition-opacity duration-300 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-24">
+<!-- Page Header -->
+<div class="text-center mb-16">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4">Shop All</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">Discover our curated collection of quiet luxury pieces, designed for intentional living and timeless elegance.</p>
+</div>
+<!-- Filter & Sort Bar -->
+<div class="flex flex-col md:flex-row justify-between items-center border-y border-outline-variant/30 py-4 mb-12 space-y-4 md:space-y-0">
+<div class="flex items-center space-x-6 overflow-x-auto w-full md:w-auto no-scrollbar pb-2 md:pb-0">
+<button class="flex items-center space-x-2 font-button text-button text-primary hover:opacity-70 transition-opacity">
+<span>Category</span>
+<span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span>
+</button>
+<button class="flex items-center space-x-2 font-button text-button text-on-surface-variant hover:opacity-70 transition-opacity">
+<span>Size</span>
+<span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span>
+</button>
+<button class="flex items-center space-x-2 font-button text-button text-on-surface-variant hover:opacity-70 transition-opacity">
+<span>Color</span>
+<span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span>
+</button>
+<button class="flex items-center space-x-2 font-button text-button text-on-surface-variant hover:opacity-70 transition-opacity">
+<span>Price</span>
+<span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span>
+</button>
+</div>
+<div class="flex items-center space-x-4 w-full md:w-auto justify-between md:justify-end">
+<span class="font-body-md text-body-md text-on-surface-variant">124 Items</span>
+<button class="flex items-center space-x-2 font-button text-button text-primary hover:opacity-70 transition-opacity">
+<span>Sort By: Featured</span>
+<span class="material-symbols-outlined text-sm" data-icon="sort">sort</span>
+</button>
+</div>
+</div>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-gutter gap-y-16">
+<!-- Product Card 1 -->
+<div class="group flex flex-col cursor-pointer">
+<div class="relative w-full aspect-[3/4] mb-4 bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" data-alt="A minimalist editorial photograph of a model wearing an elegant, flowy cream maxi dress. The background is a soft, warm ivory studio setting with subtle, natural lighting casting soft shadows. The mood is serene, luxurious, and understated, perfectly aligning with a quiet luxury fashion aesthetic. High-end fashion photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChlY182zeNwU5IT0_LURpxoJhAP1xPdhGlQKGShKda7ZnBXjFG5w2TmXEoJrRQA4vaMOAZppNFq72WLznAKA8NpEQv9FcHL6EfoDdmkOguQSpBPESNLwHqo6tIy5EXp53FB2zU-FOqvk8zrLv-mVgKQkY-OyW5-PqO117AQplynTdecpJshcusB5StSPBZY4p8vVk03qI-h4bCWuD_J01g0a96VBdwEkXW1Mc6JpKboppXlX0zEUTMng"/>
+<div class="absolute top-4 left-4 border border-primary bg-surface/90 backdrop-blur-sm px-3 py-1 font-label-caps text-label-caps text-primary">
+                        NEW IN
+                    </div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Silk Slip Dress</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-2">Sho.V</p>
+</div>
+<p class="font-body-md text-body-md text-primary">EGP 4,200</p>
+</div>
+<div class="flex space-x-2 mt-auto pt-2">
+<div class="w-4 h-4 rounded-full bg-[#E5E0D8] border border-outline-variant/30"></div>
+<div class="w-4 h-4 rounded-full bg-[#1A1A1A] border border-outline-variant/30"></div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group flex flex-col cursor-pointer">
+<div class="relative w-full aspect-[3/4] mb-4 bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" data-alt="A high-end editorial shot of a structured, tailored taupe blazer on a hanger or model. The lighting is crisp yet soft, highlighting the premium texture of the wool blend fabric. The background is a stark, clean white gallery-like space, emphasizing the minimalist and sophisticated design of the garment. Quiet luxury aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9cqtGKhebqqB0EumA2lR77bUWbhPHn6OKbPGOdjeNUVXti8moaNIzNEQ1hAbiOe56c5bm7ou36iddDdH_OKpHKgXCCAYhEe1QpqI068gfEE6FGl_ah93FtwvDGT2MwihSZ2mMLXwMaDB1wV4Dd9UaUABL5gxptsGu4Z3AiDfXmMzSALFx1g-Em79j8KE9KIwJs29bPe6DvcIsQshTiXyR_XzAQtHRs9hGKrn1oYVSZBf1y95JigtF-w"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Tailored Wool Blazer</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-2">Sho.V</p>
+</div>
+<p class="font-body-md text-body-md text-primary">EGP 6,800</p>
+</div>
+<div class="flex space-x-2 mt-auto pt-2">
+<div class="w-4 h-4 rounded-full bg-[#8C837A] border border-outline-variant/30"></div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group flex flex-col cursor-pointer">
+<div class="relative w-full aspect-[3/4] mb-4 bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" data-alt="Editorial fashion photography featuring a minimalist ribbed knit top in a soft charcoal grey. The garment is draped elegantly, capturing the fine texture and high-quality craftsmanship. The setting is bathed in warm, diffused light against an off-white background, creating a calm, sophisticated, and exclusive visual tone suitable for a luxury brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqVpoKjjwL96ocUFIFDsWCYQy-yN6hXcSylAcr2zgUnm-gafJGYmfFZJ44xSOhiuxy7dXLg8vLoftCUBnNOgnDKIwOUzuOz8FXpCgkJuE2vCc7OB3y3V7IF3QfS74MR8gIgBjSC61uKFneLsIjVDNkziWHh6wiihDw1rqtVvU7mX844cITJ28GhL3O0-rvyvCpAG3kRvNxTFz5aVgxegIVZ1Amf39nGkaIuFm_OCTmXdVatkfXWAbJCw"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Ribbed Knit Top</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-2">Sho.V</p>
+</div>
+<p class="font-body-md text-body-md text-primary">EGP 2,400</p>
+</div>
+<div class="flex space-x-2 mt-auto pt-2">
+<div class="w-4 h-4 rounded-full bg-[#4A4A4A] border border-outline-variant/30"></div>
+<div class="w-4 h-4 rounded-full bg-[#F5F5F0] border border-outline-variant/30"></div>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="group flex flex-col cursor-pointer">
+<div class="relative w-full aspect-[3/4] mb-4 bg-surface-container-low overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" data-alt="A luxurious two-piece lounge set in deep navy blue, styled elegantly on a minimalist plinth. The fabric appears soft and premium, likely cashmere or fine cotton. The lighting is cinematic yet soft, with a warm ivory backdrop that contrasts beautifully with the dark fabric. The overall mood conveys effortless sophistication and quiet luxury." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCka-AM2ZbYBpLlphHAEuJhIsXKNnuOBPwMsl083sa0L8w8uRJB-9vmwzliW7l03JX3Wg4QliaptwVvUpw43i53LYASb5oIv5arfSYmssF8v9co9YHz-1-0Tr2y3CI8HRPAGf4fdzRYenS8X7VwCAyMZqI-zcf8CrhrrcZavrNNTTktALEbWpK7i2PiZy07S1BYC7KN9I17Lmd6ZugrFPoEHsno1U2aX7b6b5efNnQeBIpwJpYZ8Yj0sA"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Cashmere Lounge Set</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-2">Sho.V</p>
+</div>
+<p class="font-body-md text-body-md text-primary">EGP 8,500</p>
+</div>
+<div class="flex space-x-2 mt-auto pt-2">
+<div class="w-4 h-4 rounded-full bg-[#1C2331] border border-outline-variant/30"></div>
+</div>
+</div>
+</div>
+<!-- Load More -->
+<div class="flex justify-center mt-24">
+<button class="bg-primary-container text-on-primary-container font-button text-button uppercase py-4 px-10 hover:bg-surface-tint transition-colors duration-300">
+                Load More
+            </button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-tertiary-container w-full mt-section-gap">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-1 mb-8 md:mb-0">
+<div class="font-display-lg text-headline-sm text-primary dark:text-primary-fixed mb-4">
+                    Sho.V
+                </div>
+<p class="font-body-md text-body-md text-on-surface dark:text-tertiary-fixed mb-4 max-w-xs">Elevating everyday essentials through intentional design and quiet luxury.</p>
+<p class="font-body-md text-body-md text-on-surface dark:text-tertiary-fixed">© 2024 Sho.V. All rights reserved.</p>
+</div>
+<div class="col-span-1 flex flex-col space-y-4">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Terms of Service</a>
+</div>
+<div class="col-span-1 flex flex-col space-y-4">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Shipping</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Returns</a>
+</div>
+<div class="col-span-1 flex flex-col space-y-4">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Newsletter</a>
+<div class="relative mt-2">
+<input class="w-full bg-transparent border-b border-primary/30 py-2 font-label-caps text-label-caps focus:outline-none focus:border-primary transition-colors rounded-none placeholder:text-on-surface-variant/50" placeholder="ENTER EMAIL" type="email"/>
+<button class="absolute right-0 top-1/2 -translate-y-1/2 text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

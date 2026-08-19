@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact Us - Sho.V</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&amp;family=Playfair+Display:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#f6dec7",
+                        "on-secondary-container": "#73614f",
+                        "on-secondary-fixed-variant": "#544433",
+                        "on-background": "#1b1c1c",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#292a27",
+                        "surface": "#fbf9f9",
+                        "on-primary-fixed": "#1b1c1c",
+                        "on-tertiary-fixed-variant": "#464744",
+                        "secondary-container": "#f6dec7",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#5f5e5e",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#474746",
+                        "surface-bright": "#fbf9f9",
+                        "inverse-primary": "#c8c6c5",
+                        "inverse-on-surface": "#f2f0f0",
+                        "surface-container": "#efeded",
+                        "surface-variant": "#e4e2e2",
+                        "on-tertiary-fixed": "#1b1c19",
+                        "primary-container": "#2a2a2a",
+                        "secondary": "#6d5b49",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f5f3f3",
+                        "tertiary-fixed-dim": "#c7c7c2",
+                        "inverse-surface": "#303031",
+                        "on-tertiary-container": "#91918d",
+                        "on-primary-container": "#929191",
+                        "on-surface": "#1b1c1c",
+                        "on-surface-variant": "#444748",
+                        "tertiary": "#141613",
+                        "primary-fixed": "#e4e2e1",
+                        "on-secondary": "#ffffff",
+                        "background": "#fbf9f9",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c4c7c7",
+                        "surface-container-high": "#e9e8e7",
+                        "primary": "#151616",
+                        "surface-container-highest": "#e4e2e2",
+                        "on-secondary-fixed": "#25190b",
+                        "tertiary-fixed": "#e3e3de",
+                        "outline": "#747878",
+                        "surface-dim": "#dbdad9",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "secondary-fixed-dim": "#d9c3ac"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "120px",
+                        "margin-mobile": "20px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "container-max": "1440px",
+                        "margin-desktop": "80px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"],
+                        "body-md": ["Montserrat"],
+                        "body-lg": ["Montserrat"],
+                        "label-caps": ["Montserrat"],
+                        "button": ["Montserrat"],
+                        "headline-sm": ["Playfair Display"],
+                        "display-lg-mobile": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.15em", "fontWeight": "600" }],
+                        "button": ["14px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.2", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom form styles to override default focus rings */
+        input:focus, textarea:focus {
+            outline: none;
+            box-shadow: none;
+            border-color: #2a2a2a; /* Charcoal */
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="bg-surface dark:bg-surface w-full top-0 sticky z-50 border-b border-outline-variant/30">
+<div class="flex flex-col items-center w-full px-margin-mobile md:px-margin-desktop py-unit max-w-container-max mx-auto">
+<div class="w-full flex justify-between items-center py-4">
+<!-- Mobile Menu Button (Placeholder) -->
+<button aria-label="Menu" class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<!-- Brand Logo -->
+<a class="font-display-lg text-headline-sm md:text-headline-md tracking-tighter text-primary dark:text-primary-fixed" href="#">
+                    Sho.V
+                </a>
+<!-- Desktop Navigation Links -->
+<div class="hidden md:flex space-x-8">
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300 cursor-pointer" href="#">Shop</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300 cursor-pointer" href="#">New In</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300 cursor-pointer" href="#">Sale</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300 cursor-pointer" href="#">About</a>
+<a class="font-label-caps text-label-caps text-primary font-bold border-b border-primary pb-1 cursor-pointer transition-all duration-200" href="#">Contact</a>
+</div>
+<!-- Trailing Icon Actions -->
+<div class="flex space-x-4 text-primary dark:text-primary-fixed">
+<button aria-label="language" class="hover:opacity-70 transition-opacity duration-300"><span class="material-symbols-outlined" data-icon="language">language</span></button>
+<button aria-label="search" class="hover:opacity-70 transition-opacity duration-300"><span class="material-symbols-outlined" data-icon="search">search</span></button>
+<button aria-label="person" class="hover:opacity-70 transition-opacity duration-300"><span class="material-symbols-outlined" data-icon="person">person</span></button>
+<button aria-label="shopping_bag" class="hover:opacity-70 transition-opacity duration-300"><span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span></button>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto py-16 md:py-section-gap">
+<!-- Header Section -->
+<section class="mb-16 md:mb-section-gap text-center md:text-left">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6">Get in Touch</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                We are here to assist you with any inquiries regarding our collections, your orders, or our services. 
+                Please reach out using the form below or via our direct contact channels.
+            </p>
+</section>
+<!-- Bento Grid Layout for Contact Info & Form -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-section-gap">
+<!-- Contact Information Column (Left) -->
+<div class="md:col-span-5 flex flex-col space-y-12 pr-0 md:pr-12">
+<!-- Customer Service -->
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4 tracking-widest">CUSTOMER SERVICE</h3>
+<div class="space-y-4">
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-outline mt-1" data-icon="mail">mail</span>
+<div>
+<p class="font-body-md text-body-md text-primary">Email Us</p>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="mailto:concierge@sho-v.com">concierge@sho-v.com</a>
+<p class="text-sm text-outline mt-1">We aim to reply within 24 hours.</p>
+</div>
+</div>
+<div class="flex items-start space-x-3 mt-6">
+<span class="material-symbols-outlined text-outline mt-1" data-icon="phone_in_talk">phone_in_talk</span>
+<div>
+<p class="font-body-md text-body-md text-primary">Call Us</p>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="tel:+18005550199">+1 (800) 555-0199</a>
+<p class="text-sm text-outline mt-1">Mon-Fri, 9am - 6pm EST</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Headquarters -->
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4 tracking-widest">HEADQUARTERS</h3>
+<div class="flex items-start space-x-3">
+<span class="material-symbols-outlined text-outline mt-1" data-icon="location_on">location_on</span>
+<div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                                145 Luxury Avenue,<br/>
+                                Suite 400<br/>
+                                New York, NY 10012<br/>
+                                United States
+                            </p>
+</div>
+</div>
+</div>
+<!-- Social & FAQ Links -->
+<div class="pt-8 border-t border-outline-variant/30">
+<a class="inline-flex items-center space-x-2 font-button text-button text-primary hover:opacity-70 transition-opacity mb-4 group" href="#">
+<span>VIEW FREQUENTLY ASKED QUESTIONS</span>
+<span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<div class="flex space-x-6 mt-4">
+<a aria-label="Instagram" class="text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="photo_camera">photo_camera</span>
+</a>
+<a aria-label="Pinterest" class="text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="push_pin">push_pin</span>
+</a>
+<a aria-label="Twitter" class="text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Minimalist Contact Form (Right) -->
+<div class="md:col-span-7 mt-12 md:mt-0">
+<div class="bg-surface-container-lowest p-8 md:p-12 border border-outline-variant/30">
+<h2 class="font-headline-sm text-headline-sm text-primary mb-8">Send a Message</h2>
+<form action="#" class="space-y-8" method="POST">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Name Input -->
+<div class="relative">
+<label class="block font-label-caps text-label-caps text-primary mb-2" for="name">FULL NAME</label>
+<input class="w-full bg-transparent border-0 border-b border-primary-container/30 px-0 py-3 text-body-md text-primary placeholder:text-outline focus:ring-0 focus:border-primary transition-colors" id="name" name="name" placeholder="Jane Doe" required="" type="text"/>
+</div>
+<!-- Email Input -->
+<div class="relative">
+<label class="block font-label-caps text-label-caps text-primary mb-2" for="email">EMAIL ADDRESS</label>
+<input class="w-full bg-transparent border-0 border-b border-primary-container/30 px-0 py-3 text-body-md text-primary placeholder:text-outline focus:ring-0 focus:border-primary transition-colors" id="email" name="email" placeholder="jane@example.com" required="" type="email"/>
+</div>
+</div>
+<!-- Subject Select (Optional luxury touch) -->
+<div class="relative">
+<label class="block font-label-caps text-label-caps text-primary mb-2" for="subject">INQUIRY TYPE</label>
+<select class="w-full bg-transparent border-0 border-b border-primary-container/30 px-0 py-3 text-body-md text-primary focus:ring-0 focus:border-primary transition-colors appearance-none" id="subject" name="subject">
+<option value="general">General Inquiry</option>
+<option value="order">Order Status</option>
+<option value="returns">Returns &amp; Exchanges</option>
+<option value="press">Press &amp; Media</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 pt-6 text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Message Input -->
+<div class="relative">
+<label class="block font-label-caps text-label-caps text-primary mb-2" for="message">YOUR MESSAGE</label>
+<textarea class="w-full bg-transparent border border-primary-container/30 p-4 text-body-md text-primary placeholder:text-outline focus:ring-0 focus:border-primary transition-colors resize-none mt-2" id="message" name="message" placeholder="How can we assist you?" required="" rows="4"></textarea>
+</div>
+<!-- Submit Button -->
+<div class="pt-4">
+<button class="w-full md:w-auto bg-secondary text-on-secondary font-button text-button px-[40px] py-[16px] hover:bg-primary-container hover:text-on-primary-container transition-colors duration-300" type="submit">
+                                SEND MESSAGE
+                            </button>
+</div>
+</form>
+</div>
+</div>
+</section>
+<!-- Decorative Image Section -->
+<section class="w-full h-64 md:h-96 bg-surface-container-low mb-section-gap">
+<div class="w-full h-full bg-cover bg-center" data-alt="A minimalist, high-end editorial photograph of soft, natural sunlight casting subtle shadows across a textured, warm ivory stone surface. The composition is abstract and serene, focusing on the interplay of light and quiet luxury, embodying the brand's sophisticated aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCZDD6Q9KsDekuqjY5RP0UscNskcvnXVmRDl5i1JqKB5W_l0978-_AfT9p06JDEWUvc5hVfoA9Z3BZ0251BhsQPZ3Kl5jdVPNAjmdyun3ZD-Et3BD0mnrgGAJO6hRWT4ViV5EW5teZYftD2kdw4AYLXAtmvbjS5SJSM3Mb3JZfWM9L4FqOu63v203U_VAHaiqr3qUrtw31hvC7ObNOK-381KM5xRhE1_YH9BCm4w5nY4eNVOlXz5qj0uA')"></div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-tertiary-container w-full mt-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto">
+<!-- Brand Column -->
+<div class="col-span-1">
+<a class="font-display-lg text-headline-sm text-primary dark:text-primary-fixed block mb-6" href="#">Sho.V</a>
+<p class="font-body-md text-body-md text-on-surface dark:text-tertiary-fixed mb-4">Quiet Luxury. Timeless Design.</p>
+</div>
+<!-- Links Column 1 -->
+<div class="col-span-1">
+<h4 class="font-label-caps text-label-caps text-on-surface dark:text-tertiary-fixed mb-4">SUPPORT</h4>
+<ul class="space-y-3">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Shipping</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Returns</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Contact Us</a></li>
+</ul>
+</div>
+<!-- Links Column 2 -->
+<div class="col-span-1">
+<h4 class="font-label-caps text-label-caps text-on-surface dark:text-tertiary-fixed mb-4">LEGAL</h4>
+<ul class="space-y-3">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Privacy Policy</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Terms of Service</a></li>
+</ul>
+</div>
+<!-- Newsletter Column -->
+<div class="col-span-1">
+<h4 class="font-label-caps text-label-caps text-on-surface dark:text-tertiary-fixed mb-4">NEWSLETTER</h4>
+<form class="flex flex-col space-y-4">
+<input class="bg-transparent border-0 border-b border-outline-variant px-0 py-2 text-body-md text-on-surface focus:ring-0 focus:border-primary" placeholder="Email Address" type="email"/>
+<button class="text-left font-button text-button text-primary hover:opacity-70 transition-opacity" type="button">SUBSCRIBE</button>
+</form>
+</div>
+</div>
+<!-- Copyright -->
+<div class="w-full border-t border-outline-variant/30 px-margin-mobile md:px-margin-desktop py-6 max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center">
+<p class="font-body-md text-sm text-on-surface-variant">© 2024 Sho.V. All rights reserved.</p>
+</div>
+</footer>
+</body></html>

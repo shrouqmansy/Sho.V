@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sho.V - E-commerce Homepage</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&amp;family=Jost:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Jost"', 'sans-serif'],
+          },
+          colors: {
+            'brand-bg': '#fcfaf7',
+            'brand-dark': '#2c2a29',
+            'brand-accent': '#bc9c85',
+            'brand-accent-hover': '#a6856d',
+            'brand-muted': '#f3f0ec',
+            'brand-border': '#e2ded9'
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="base-styles">
+    body {
+      background-color: #fcfaf7;
+      color: #2c2a29;
+      font-family: 'Jost', sans-serif;
+    }
+    h1, h2, h3, h4, h5, h6, .font-serif {
+      font-family: 'Playfair Display', serif;
+    }
+    .hover-underline {
+      position: relative;
+    }
+    .hover-underline::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      height: 1px;
+      bottom: 0;
+      left: 0;
+      background-color: currentColor;
+      transform-origin: bottom right;
+      transition: transform 0.25s ease-out;
+    }
+    .hover-underline:hover::after {
+      transform: scaleX(1);
+      transform-origin: bottom left;
+    }
+    /* Hide scrollbar for horizontal scroll containers */
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="antialiased text-brand-dark bg-brand-bg flex flex-col min-h-screen">
+<!-- BEGIN: Header -->
+<header class="sticky top-0 z-50 bg-brand-bg border-b border-brand-border py-4 px-6 md:px-12 flex justify-between items-center w-full">
+<!-- Logo -->
+<div class="flex-shrink-0">
+<a class="font-serif text-2xl tracking-widest uppercase" href="#">Sho.V</a>
+</div>
+<!-- Desktop Navigation -->
+<nav class="hidden lg:flex items-center space-x-6 xl:space-x-8 text-sm uppercase tracking-wide">
+<a class="hover-underline" href="#">Theme Features</a>
+<a class="hover-underline flex items-center relative group" href="#">
+        Sale
+        <span class="ml-1 text-[10px]">▼</span>
+<span class="absolute -top-3 -right-4 bg-brand-accent text-white text-[9px] px-1 rounded-sm">Sale</span>
+</a>
+<a class="hover-underline flex items-center relative group" href="#">
+        Shop
+        <span class="ml-1 text-[10px]">▼</span>
+<span class="absolute -top-3 -right-4 bg-brand-dark text-white text-[9px] px-1 rounded-sm">New</span>
+</a>
+<a class="hover-underline flex items-center" href="#">
+        New in
+        <span class="ml-1 text-[10px]">▼</span>
+</a>
+<a class="hover-underline flex items-center" href="#">
+        About
+        <span class="ml-1 text-[10px]">▼</span>
+</a>
+<a class="hover-underline flex items-center" href="#">
+        Contact
+        <span class="ml-1 text-[10px]">▼</span>
+</a>
+</nav>
+<!-- Right Icons & Lang/Currency -->
+<div class="flex items-center space-x-4 lg:space-x-6 text-sm">
+<div class="hidden lg:flex items-center space-x-4">
+<a class="hover-underline flex items-center" href="#">English <span class="ml-1 text-[10px]">▼</span></a>
+<a class="hover-underline flex items-center" href="#">EGP <span class="ml-1 text-[10px]">▼</span></a>
+</div>
+<div class="flex items-center space-x-3">
+<!-- Account Icon -->
+<a class="hover:text-brand-accent transition-colors" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</a>
+<!-- Search Icon -->
+<a class="hover:text-brand-accent transition-colors" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</a>
+<!-- Cart Icon -->
+<a class="hover:text-brand-accent transition-colors relative" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="absolute -top-1 -right-1.5 bg-brand-dark text-white text-[10px] w-3.5 h-3.5 rounded-full flex items-center justify-center">0</span>
+</a>
+<!-- Mobile Menu Toggle -->
+<button class="lg:hidden hover:text-brand-accent transition-colors">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</div>
+</header>
+<!-- END: Header -->
+<!-- BEGIN: Main Content -->
+<main class="flex-grow">
+<!-- BEGIN: Hero Section -->
+<section class="w-full flex flex-col md:flex-row min-h-[70vh] md:h-[80vh] bg-[#f5f1eb]">
+<!-- Left Image -->
+<div class="w-full md:w-1/3 h-[50vh] md:h-full relative overflow-hidden">
+<!-- We use object-cover to match the layout but ideally would crop specifically from the sprite if we had coordinates -->
+<img alt="Model in white shirt" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMu06wrc9qB7e3nZQNlHCUiE-IjZfgP7ngdvse6i8-eSv3mrcakC0WHRKUSFy_U9puJoZSbPWtXai590XqIidJP5xb_d5wbNTdm_4d_5XEN2TaheyJuYFN7VmLgfqF-nW6INcSAp5pbKbp5jK7eiT7SgxEC5U5oAUKtxQJvl0QXJhyQcpzfIK9C5N5goyc6zcHVYME2i0_8g-XE5dzCxEIpbiemYt-Mk2LFzuQTlUTHQA2wQJQ7-Phfw" style="object-position: 50% 20%;"/>
+</div>
+<!-- Center Text -->
+<div class="w-full md:w-1/3 h-[40vh] md:h-full flex flex-col items-center justify-center px-8 text-center bg-[#f7f4ee]">
+<span class="text-sm uppercase tracking-widest text-gray-500 mb-4">Beyond the Ordinary.</span>
+<h1 class="font-serif text-4xl md:text-5xl lg:text-6xl mb-6 font-normal">Your Inner<br/>Beauty</h1>
+<p class="text-sm text-gray-600 mb-8 max-w-xs mx-auto">For those who find beauty beyond the expected.</p>
+<a class="bg-brand-accent hover:bg-brand-accent-hover text-white uppercase text-sm tracking-widest py-3 px-8 transition-colors duration-300" href="#">Shop Now</a>
+<!-- Slider Dots -->
+<div class="flex space-x-2 mt-12">
+<span class="w-2 h-2 rounded-full bg-brand-dark"></span>
+<span class="w-2 h-2 rounded-full border border-gray-400"></span>
+<span class="w-2 h-2 rounded-full border border-gray-400"></span>
+</div>
+</div>
+<!-- Right Image -->
+<div class="w-full md:w-1/3 h-[50vh] md:h-full relative overflow-hidden">
+<img alt="Model in sheer blouse" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARHfTAouX5lqbooof2VB5wQZI-Mqpx1H_4sef9MLX6qf2xs2C5a5nfxgg9YFBf204rHfIh5xWnV21hCuZ1f64dYwJMiPdMGD53Xc4_lNWD-H5nlYJjpdD2VFVMiDgeNzsiGv3d__HGUfyNnNng0R_DjoVB8QWjLdbd3fP-twODD6f-pV-rhmkIlatHE3qMdlWWCejL4mL6ZnPYGpIQkrsRHIXVdbMYs-RHFrsvYhJpR3CM2LZpqS9BZA" style="object-position: 50% 15%;"/>
+</div>
+</section>
+<!-- END: Hero Section -->
+<!-- BEGIN: Featured Collection -->
+<section class="py-20 px-6 md:px-12 max-w-[1600px] mx-auto">
+<div class="text-center mb-12">
+<span class="text-xs uppercase tracking-widest text-gray-500 mb-2 block">Pieces designed to elevate the everyday</span>
+<h2 class="font-serif text-3xl md:text-4xl">Featured collection</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+<!-- Large Featured Product (Spans 2 columns on desktop) -->
+<div class="col-span-1 md:col-span-2 group">
+<div class="relative bg-brand-muted overflow-hidden mb-4 aspect-[3/4]">
+<img alt="Single-breasted blazer in olive/cream" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPtN7lAXXHCJgcqqXrJNt9x7m1iNEVho0PR4nZ8T6txoVuo_sMhC4EUFqfKH32z4BqdRw5tAtcIOqwbvIkSW6gWGOMPBNqV5_z2Yp__VKTxoDqwkmBqZnbv7zr2PQViq6lqqPo8WR3vTWwDTquZaSCT-qBKwC5nK9gDGD6VTro6HjF7J5p5VRaY_oC9P-Muzeo-Z4uB-rJiutXqRkDDnHLWfkALiPIvUFuNZaFSw8hILlMztOwbTDdxg"/>
+<!-- Badges etc could go here -->
+</div>
+<!-- Swatches -->
+<div class="flex space-x-2 mb-2">
+<span class="w-4 h-4 rounded-full bg-[#a3a89e] ring-1 ring-offset-2 ring-brand-dark"></span>
+<span class="w-4 h-4 rounded-full border border-gray-300 bg-[#f4f1ea]"></span>
+</div>
+<h3 class="text-sm font-medium mb-1">Single-breasted blazer in olive/cream</h3>
+<p class="text-xs text-gray-500 mb-2">SHO.V</p>
+<div class="text-sm font-medium">From EGP 150.00</div>
+</div>
+<!-- Product 2 -->
+<div class="col-span-1 flex flex-col justify-between">
+<div class="group mb-8">
+<div class="relative bg-brand-muted overflow-hidden mb-4 aspect-[3/4]">
+<img alt="Single-breasted blazer white" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_mCxSmFrrKMEusbe3B3lrvelwNJ6SF4j-rdc5Aeq67JVb2o9Yhlq9efVe2t4t_rQOPchUjXaosRP_lHa5_n3ITXdsvt-Ve8p3jLZmJ1jNWpVVzBtCx7pws-IkHC9YFC-E2ERVx-uyeftX8YLh5VgRo8t1YUSpplrloBjU-kiP9InHUlT0I66c6NETSFahS58DlrMhlndrR-Lxm66d5UfNabeS4TBBt7UXm94jC7pZxWIrTk4XI--0VA"/>
+</div>
+<div class="flex space-x-2 mb-2">
+<span class="w-4 h-4 rounded-full border border-gray-300 bg-white ring-1 ring-offset-2 ring-brand-dark"></span>
+<span class="w-4 h-4 rounded-full bg-[#333]"></span>
+<span class="w-4 h-4 rounded-full bg-[#e8e2d6]"></span>
+</div>
+<h3 class="text-sm font-medium mb-1">Single-breasted blazer</h3>
+<p class="text-xs text-gray-500 mb-2">SHO.V</p>
+<div class="text-sm font-medium flex items-center space-x-2">
+<span class="text-red-800">EGP 3,700.00</span>
+<span class="text-gray-400 line-through text-xs">EGP 4,000.00</span>
+</div>
+</div>
+<div class="group">
+<div class="relative bg-brand-muted overflow-hidden mb-4 aspect-[3/4]">
+<img alt="Linen blazer with thin belt" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmjNfZkEtS8sE0EwUlrDjwkJPnTb4TrYKB3Xeozka4EQGpkm52jnlf4E-LVH3Tvi9TYXWkujK9JSmZnT2yrE_sJavKr4aWuAi_R-aU7j_zwX7AfjxQTO0fLRl5yeeMdTT_8iUUCR_ZcFr7tUXAjW_iimyAA-nYH7bC-yWHOOOSKvcaaT0pHqTI7dvH7ZyGaA4lX4SocNbtZr_F3HKdqksRdS6LXZX_7zZtKZWQdIoWf3rnqsgXjORNmw"/>
+</div>
+<div class="flex space-x-2 mb-2">
+<span class="w-4 h-4 rounded-full bg-[#333] ring-1 ring-offset-2 ring-brand-dark"></span>
+<span class="w-4 h-4 rounded-full bg-[#f0ebd8]"></span>
+</div>
+<h3 class="text-sm font-medium mb-1">Linen blazer with thin belt</h3>
+<p class="text-xs text-gray-500 mb-2">SHO.V</p>
+<div class="text-sm font-medium flex items-center space-x-2">
+<span class="text-red-800">EGP 3,200.00</span>
+<span class="text-gray-400 line-through text-xs">EGP 3,400.00</span>
+</div>
+</div>
+</div>
+<!-- Product 3 & 4 column -->
+<div class="col-span-1 flex flex-col justify-between">
+<div class="group mb-8">
+<div class="relative bg-brand-muted overflow-hidden mb-4 aspect-[3/4]">
+<img alt="Blazer with two slits" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4yjslGZda-RWPrMLNkUGGkWuZ5E83aWli4R3cQzWVaTyD4Rubq_vaA9ij7Dw3ykBgOqlDdJewACR-uuU4u54W9hPUmm1YGINXpVaPLaeo1OCI8kw8wWD1BUBpQ_MIJk73LCmMwmwtFG5D40PQsGZTun74SD_rxaiTSRy3G-JkCPURA3ZwKKcba1uqpRfJ0dephVCY4EpfvWAxzIC-pg-iZpnCH28XCk4Xnrd3xgPp8AM1R6KhX4U4LQ"/>
+</div>
+<div class="flex space-x-2 mb-2">
+<span class="w-4 h-4 rounded-full bg-[#bfa895] ring-1 ring-offset-2 ring-brand-dark"></span>
+<span class="w-4 h-4 rounded-full bg-[#333]"></span>
+</div>
+<h3 class="text-sm font-medium mb-1">Blazer with two slits</h3>
+<p class="text-xs text-gray-500 mb-2">SHO.V</p>
+<div class="text-sm font-medium flex items-center space-x-2">
+<span class="text-red-800">EGP 1,990.00</span>
+<span class="text-gray-400 line-through text-xs">EGP 2,400.00</span>
+</div>
+</div>
+<div class="group">
+<div class="relative bg-brand-muted overflow-hidden mb-4 aspect-[3/4]">
+<img alt="Tweed blazer" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDa15JK_661yaZVWG8bzvYBGRGZP6HE0G1xQlYbD8Y-ppbaZHfwYPC3GC5azHIueW6xX9aX4kJ-G56V9Zjpth7hM0II1gri6mfCT63309BDdPbffHw7JeWLhMR0JRHo_GXqIJwr0Xm1SX8sErtLOjN0jAdnJBzAIaEO-YIRzmQ79Mj-1ic33Z3o2WniR7eZQPF22kmCTWyAqjX4KB0RoOUu44sLKJ9Hi5nFDt9W76YB_7kGMu0UXao-dg"/>
+</div>
+<div class="flex space-x-2 mb-2">
+<span class="w-4 h-4 rounded-full border border-gray-300 bg-white ring-1 ring-offset-2 ring-brand-dark"></span>
+<span class="w-4 h-4 rounded-full bg-[#556677]"></span>
+</div>
+<h3 class="text-sm font-medium mb-1">Tweed blazer</h3>
+<p class="text-xs text-gray-500 mb-2">SHO.V</p>
+<div class="text-sm font-medium">EGP 2,100.00</div>
+</div>
+</div>
+</div>
+<div class="mt-16 text-center">
+<a class="inline-block bg-brand-accent hover:bg-brand-accent-hover text-white uppercase text-sm tracking-widest py-3 px-12 transition-colors duration-300" href="#">Shop All</a>
+</div>
+</section>
+<!-- END: Featured Collection -->
+<!-- BEGIN: Collection List -->
+<section class="py-16 px-6 md:px-12 bg-white border-y border-brand-border">
+<div class="text-center mb-12">
+<h2 class="font-serif text-3xl md:text-4xl">Collection list</h2>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+<a class="group block text-center" href="#">
+<div class="relative bg-brand-muted overflow-hidden mb-4 aspect-[3/4]">
+<img alt="Dresses Category" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOCTTiqUk9oazxTWDPeuVCg4u7lAt9Cy4W-8vqB1KCABNhcXvldfg-oFnJ986F9KCyW2RD4P9zYkjSbLMxq1htqUZjILyHv95hLy-0cjnyQ_cJP6dXzmDwZmu0wvsjHWAuzjvyor1C86NQkjuryEFZBl6OHEzBSKIvdwoX9tnnAVM4nJtr2LOh7ZgUEWL29cUIv5B8qKIGmsKBEDGYaymRq4FEqMHpziEGyTtBi_iEWs58HVW6piFTlw"/>
+</div>
+<h3 class="font-medium text-sm md:text-base uppercase tracking-wider group-hover:text-brand-accent transition-colors">Dresses</h3>
+</a>
+<a class="group block text-center" href="#">
+<div class="relative bg-brand-muted overflow-hidden mb-4 aspect-[3/4]">
+<img alt="New in Category" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdq23cfNuga6o0P5jEgpHpJiw8veecqr_xLn_wkDpOG2RXuy9t1ferRQqRAw58iujNVApkW4cQLLh4XtHZoDeoiRMQCKE4KTv60NnRxCnujhWSpzRKtaCEmj1M8gaL496NSRC2t4X9Zrx5vzs30tjBtxiGEVq9JDr-QIX5_gBk70kLSLIaxQhV9zBoIhFhm_NA3Ocb-21EBilFtSbv8iXVEhsO9T6clWHoom69DE3bDeVGtB1Nsb4beQ"/>
+</div>
+<h3 class="font-medium text-sm md:text-base uppercase tracking-wider group-hover:text-brand-accent transition-colors">New in</h3>
+</a>
+<a class="group block text-center" href="#">
+<div class="relative bg-brand-muted overflow-hidden mb-4 aspect-[3/4]">
+<img alt="Blazers Category" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM7QQ0F3_LBCF95KTh-HheEPFsTy_Uz1fNTYkVWMYm0Vs1Vn1kgE6BUOuqPVzi00K0KslYxK4IueCbRYPLfSBBJKnLJ5wdkz9185x7kcDcKhdXKNT8yJxLv-maJYv4fUBmRKO4r9_GyCjgA2fCNFHk1v2ws1VumGT9UrTIx9AgyGAl7VO2uKH-432qD8KW3GiJcrptLDALRTAR92W-88YhFrl8UvcUHB-YjNzmYG7UVnGpomBdXF_OTw"/>
+</div>
+<h3 class="font-medium text-sm md:text-base uppercase tracking-wider group-hover:text-brand-accent transition-colors">Blazers</h3>
+</a>
+<a class="group block text-center" href="#">
+<div class="relative bg-brand-muted overflow-hidden mb-4 aspect-[3/4]">
+<img alt="Tops Category" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBT9m4-LUDXFLJMvxQeKWqalZ-lgPPGzeEWTSSGt4yrU7xamNAKnLZbAplBGnkLdSdsD6LnJVvgdJ2DTArt_QAQDl9GiTUYRcM1Jlg8M-nZesxyRN1pvieZ8NNDypKfQrhMu3M2mRMLpGoYggxLnmA5MTR-Tc25uLBWZEwTbNs_N7fuANgLDGeWRlc71t687famj_Kl1W7SVCOZpFqi5Ni6SBJQRAL5nJ50g5mmZN8XmL2g6ODC8_NlDg"/>
+</div>
+<h3 class="font-medium text-sm md:text-base uppercase tracking-wider group-hover:text-brand-accent transition-colors">Tops</h3>
+</a>
+</div>
+</section>
+<!-- END: Collection List -->
+</main>
+<!-- END: Main Content -->
+<!-- BEGIN: Footer -->
+<footer class="bg-[#2c2a29] text-white pt-16 pb-8 px-6 md:px-12 border-t border-brand-border">
+<div class="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+<!-- Brand & Newsletter -->
+<div class="lg:col-span-2">
+<a class="font-serif text-3xl tracking-widest uppercase block mb-6 text-white" href="#">Sho.V</a>
+<p class="text-sm text-gray-400 mb-6 max-w-sm">Join our newsletter to stay updated on new arrivals, exclusive sales, and style inspiration.</p>
+<form class="flex border-b border-gray-600 pb-2 max-w-sm">
+<input class="bg-transparent w-full focus:outline-none text-sm placeholder-gray-500" placeholder="Email Address" required="" type="email"/>
+<button class="text-sm uppercase tracking-wider hover:text-brand-accent transition-colors" type="submit">Subscribe</button>
+</form>
+</div>
+<!-- Links Column 1 -->
+<div>
+<h4 class="font-serif text-lg mb-6">Shop</h4>
+<ul class="space-y-3 text-sm text-gray-400">
+<li><a class="hover:text-white transition-colors" href="#">Shop All</a></li>
+<li><a class="hover:text-white transition-colors" href="#">New In</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Dresses</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Blazers</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Sale</a></li>
+</ul>
+</div>
+<!-- Links Column 2 -->
+<div>
+<h4 class="font-serif text-lg mb-6">Information</h4>
+<ul class="space-y-3 text-sm text-gray-400">
+<li><a class="hover:text-white transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Contact</a></li>
+<li><a class="hover:text-white transition-colors" href="#">FAQ</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Shipping &amp; Returns</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1600px] mx-auto pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+<p>© 2024 Sho.V. All rights reserved.</p>
+<!-- Socials -->
+<div class="flex space-x-4 mt-4 md:mt-0">
+<a class="hover:text-white transition-colors" href="#">Instagram</a>
+<a class="hover:text-white transition-colors" href="#">Facebook</a>
+<a class="hover:text-white transition-colors" href="#">Pinterest</a>
+</div>
+</div>
+</footer>
+<!-- END: Footer -->
+</body></html>

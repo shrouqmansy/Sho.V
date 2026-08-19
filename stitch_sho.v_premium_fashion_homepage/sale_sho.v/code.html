@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sho.V - Sale</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&amp;family=Playfair+Display:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#f6dec7",
+                        "on-secondary-container": "#73614f",
+                        "on-secondary-fixed-variant": "#544433",
+                        "on-background": "#1b1c1c",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#292a27",
+                        "surface": "#fbf9f9",
+                        "on-primary-fixed": "#1b1c1c",
+                        "on-tertiary-fixed-variant": "#464744",
+                        "secondary-container": "#f6dec7",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#5f5e5e",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#474746",
+                        "surface-bright": "#fbf9f9",
+                        "inverse-primary": "#c8c6c5",
+                        "inverse-on-surface": "#f2f0f0",
+                        "surface-container": "#efeded",
+                        "surface-variant": "#e4e2e2",
+                        "on-tertiary-fixed": "#1b1c19",
+                        "primary-container": "#2a2a2a",
+                        "secondary": "#6d5b49",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f5f3f3",
+                        "tertiary-fixed-dim": "#c7c7c2",
+                        "inverse-surface": "#303031",
+                        "on-tertiary-container": "#91918d",
+                        "on-primary-container": "#929191",
+                        "on-surface": "#1b1c1c",
+                        "on-surface-variant": "#444748",
+                        "tertiary": "#141613",
+                        "primary-fixed": "#e4e2e1",
+                        "on-secondary": "#ffffff",
+                        "background": "#fbf9f9",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c4c7c7",
+                        "surface-container-high": "#e9e8e7",
+                        "primary": "#151616",
+                        "surface-container-highest": "#e4e2e2",
+                        "on-secondary-fixed": "#25190b",
+                        "tertiary-fixed": "#e3e3de",
+                        "outline": "#747878",
+                        "surface-dim": "#dbdad9",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "secondary-fixed-dim": "#d9c3ac"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "120px",
+                        "margin-mobile": "20px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "container-max": "1440px",
+                        "margin-desktop": "80px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"],
+                        "body-md": ["Montserrat"],
+                        "body-lg": ["Montserrat"],
+                        "label-caps": ["Montserrat"],
+                        "button": ["Montserrat"],
+                        "headline-sm": ["Playfair Display"],
+                        "display-lg-mobile": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.15em", "fontWeight": "600" }],
+                        "button": ["14px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.2", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #fbf9f9; color: #1b1c1c; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col font-body-md text-body-md">
+<!-- TopNavBar -->
+<nav class="bg-surface dark:bg-surface text-primary dark:text-primary-fixed w-full top-0 sticky border-b border-outline-variant/30 z-50">
+<div class="flex flex-col items-center w-full px-margin-mobile md:px-margin-desktop py-unit max-w-container-max mx-auto">
+<div class="flex justify-between items-center w-full py-4">
+<!-- Mobile Menu Icon (Placeholder for now) -->
+<button class="md:hidden p-2 text-on-surface hover:opacity-70 transition-opacity duration-300 cursor-pointer">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<a class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg tracking-tighter text-primary dark:text-primary-fixed" href="#">Sho.V</a>
+<div class="flex items-center gap-4">
+<button class="text-on-surface hover:opacity-70 transition-opacity duration-300 cursor-pointer p-2 hidden md:block">
+<span class="material-symbols-outlined">language</span>
+</button>
+<button class="text-on-surface hover:opacity-70 transition-opacity duration-300 cursor-pointer p-2">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="text-on-surface hover:opacity-70 transition-opacity duration-300 cursor-pointer p-2 hidden md:block">
+<span class="material-symbols-outlined">person</span>
+</button>
+<button class="text-on-surface hover:opacity-70 transition-opacity duration-300 cursor-pointer p-2">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
+</div>
+</div>
+<div class="hidden md:flex items-center justify-center gap-8 py-4 font-label-caps text-label-caps w-full">
+<a class="text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300 cursor-pointer" href="#">Shop</a>
+<a class="text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300 cursor-pointer" href="#">New In</a>
+<a class="text-primary font-bold border-b border-primary pb-1 hover:opacity-70 transition-opacity duration-300 cursor-pointer" href="#">Sale</a>
+<a class="text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300 cursor-pointer" href="#">About</a>
+<a class="text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300 cursor-pointer" href="#">Contact</a>
+</div>
+</div>
+</nav>
+<!-- Promotional Banner -->
+<div class="w-full bg-secondary text-on-secondary py-4 px-margin-mobile md:px-margin-desktop text-center">
+<p class="font-label-caps text-label-caps">The Seasonal Edit - Up to 40% Off</p>
+</div>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-section-gap">
+<!-- Header -->
+<header class="mb-16 md:mb-24 flex flex-col md:flex-row justify-between items-end gap-8 border-b border-outline-variant/30 pb-8">
+<div>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg mb-4 text-primary">Sale</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Curated pieces from past collections. Limited quantities available.</p>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 border border-primary px-4 py-2 hover:bg-surface-variant transition-colors duration-200">
+<span class="font-button text-button">Filter</span>
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+<button class="flex items-center gap-2 border border-primary px-4 py-2 hover:bg-surface-variant transition-colors duration-200">
+<span class="font-button text-button">Sort</span>
+<span class="material-symbols-outlined text-[18px]">swap_vert</span>
+</button>
+</div>
+</header>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-gutter gap-y-16">
+<!-- Product Card 1 -->
+<a class="group block relative cursor-pointer" href="#">
+<div class="absolute top-4 left-4 z-10 border border-primary bg-surface px-3 py-1">
+<span class="font-label-caps text-label-caps text-primary">SALE</span>
+</div>
+<div class="aspect-[3/4] mb-6 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A minimalist fashion photography shot of a sleek, structured taupe wool coat on a model. The background is a clean, warm ivory studio setting, perfectly matched to a light mode luxury e-commerce interface. The lighting is soft, diffused, and high-key, highlighting the premium texture of the fabric. The overall mood is sophisticated, calm, and understated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdcTP4qk3KU8QSrYlDnjiD4gDdMF8y0qiRSLmX-tElhSqbm2g2IXF6EvtibGdbXmkR5q_Q-DuL9VubZqqWEq_GTzeCm_jrcfhV8moBuou3XpPOKNpAF6CujA-5mSCt6vnbFmaEhLTWmI1OLWBm03fn6TAvP39JubxeTIEr5yjBOxVeRwrDEpOGTJZrgj-jxiVbFrkMmW34WP639HA7dk-uqFUtpaMeaJQbChsqE0yJYUbL13WSaP_-Lg"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2">Structured Wool Coat</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Taupe</p>
+</div>
+<div class="text-right">
+<p class="font-body-md text-body-md text-on-surface-variant line-through mb-1">$890</p>
+<p class="font-body-md text-body-md font-medium text-error">$534</p>
+</div>
+</div>
+</a>
+<!-- Product Card 2 -->
+<a class="group block relative cursor-pointer" href="#">
+<div class="absolute top-4 left-4 z-10 border border-primary bg-surface px-3 py-1">
+<span class="font-label-caps text-label-caps text-primary">SALE</span>
+</div>
+<div class="aspect-[3/4] mb-6 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="An editorial style close-up of a luxurious silk midi slip dress in deep charcoal grey. The garment is draped elegantly, photographed against a stark, bright white background. The lighting creates subtle, soft shadows emphasizing the fluid drape of the silk. The aesthetic is extremely minimalist, high-end, and perfectly suited for a quiet luxury e-commerce site." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtHI8HRwPz1CrXyC8szEDPW5Lv1AlEn70yCq7J2KxakekfaJVB8xxJ21WazdqA-mSuR9FfVO1ABqIlnAKJ-maQjIHoc-SKBmmdXy6I1GdsIQAjww_njRAcNpkqMLLK6hBthMDmXRMTw8oRkXTEzuuLoNhHuKb22_2T4PlywoYrSw6utvp1-RGhnm4CLS626L5_TIpFUT2GlhPT5zoXElfFSeOQChpdJZv19NRXIUOmDK3EcM6VHE-Jcw"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2">Silk Midi Dress</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Charcoal</p>
+</div>
+<div class="text-right">
+<p class="font-body-md text-body-md text-on-surface-variant line-through mb-1">$450</p>
+<p class="font-body-md text-body-md font-medium text-error">$315</p>
+</div>
+</div>
+</a>
+<!-- Product Card 3 -->
+<a class="group block relative cursor-pointer" href="#">
+<div class="absolute top-4 left-4 z-10 border border-primary bg-surface px-3 py-1">
+<span class="font-label-caps text-label-caps text-primary">SALE</span>
+</div>
+<div class="aspect-[3/4] mb-6 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A meticulously styled product shot of a pair of minimalist black leather ankle boots. They are placed slightly asymmetrically on a smooth, pale ivory plinth against a matching warm white backdrop. The lighting is crisp yet soft, creating a serene, architectural composition typical of high-end editorial fashion catalogs." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm4kp4WQRdET_ayPfl9aiMd3W7CtORNbq16NMSwoYKjvTZkAeGvd5Lt5rPkKbURzE3hAY6fLPpktImeQzWrmfuV9txf6DvjOn10zDXpcl9kzIy70rNxEsGGTenImE2WAX-lsAY-RQQRbvYEClpSmmpMJxsnSvm-HTz-XdPXhqnTfxUcEJ__9_ccNdbq4HjE1tiviuQ682v0DcFUjX8mfF8ic8z9ARMfNsrByWnXXAAK5lKqhb_JPkX7g"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2">Leather Ankle Boots</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Black</p>
+</div>
+<div class="text-right">
+<p class="font-body-md text-body-md text-on-surface-variant line-through mb-1">$520</p>
+<p class="font-body-md text-body-md font-medium text-error">$364</p>
+</div>
+</div>
+</a>
+<!-- Product Card 4 -->
+<a class="group block relative cursor-pointer" href="#">
+<div class="absolute top-4 left-4 z-10 border border-primary bg-surface px-3 py-1">
+<span class="font-label-caps text-label-caps text-primary">SALE</span>
+</div>
+<div class="aspect-[3/4] mb-6 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A clean, flat-lay photograph of a crisp white cotton poplin oversized shirt. The shirt is perfectly ironed and laid flat on a slightly darker ivory surface to create subtle tonal separation without harsh borders. The minimalist, light-mode aesthetic evokes a sense of calm, timeless wardrobe staples." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgmiZg2ze_v8gAF6M56XmEGJmG63lTDLF4kEBrRnnMS4OlzbmkHVfSpizrChRg0RthCJD0Zfs0PG6YlBHrXMh2_yp9nVUh-5GpaWR-zwU0EPnpayDsPoFMBQIl6NgOBNcpuyNK_HGEJgUUV3Gq_tt28fHd7GX68XK7ubQfd95LzZUcaZVxKE4xOPLLsdoR6YcTdtlTUQeen16QmI_dfT2-HoZjyAb8mfJCjOO14ZrVkCQmEi0eguP-mQ"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2">Oversized Poplin Shirt</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">White</p>
+</div>
+<div class="text-right">
+<p class="font-body-md text-body-md text-on-surface-variant line-through mb-1">$280</p>
+<p class="font-body-md text-body-md font-medium text-error">$196</p>
+</div>
+</div>
+</a>
+<!-- Product Card 5 -->
+<a class="group block relative cursor-pointer" href="#">
+<div class="absolute top-4 left-4 z-10 border border-primary bg-surface px-3 py-1">
+<span class="font-label-caps text-label-caps text-primary">SALE</span>
+</div>
+<div class="aspect-[3/4] mb-6 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="An elegant shot of a chunky knit cashmere sweater in a soft oatmeal hue. The model is partially visible, emphasizing the drape and luxurious texture of the knitwear. The setting is a bright, sunlit minimalist studio with warm ivory tones, reflecting a quiet luxury aesthetic suitable for a premium brand's sale page." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIpEDy5apImq8D7PPAwts0wcvEJwMp_MLL00A6wyZAMfHcgR1MQE6V87GAo1aZxN3Ga3Q2ZxkmtBq5rI2-ZdmGbzFdubF66vRCQ-GJ-Z8k_Ve4_2iYa_apAIV_PaySWkRwkbwv7FBCxYwiEdlUqldLNq13NL2KVWH_-wxcxnzT_5HTpnD5z4ReIk7oDNswOF4gFF2iH3XS6G1S7izWkdWZcNshMKzG7XjBQIew2mzQztJFgUABLn-Tzg"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2">Cashmere Knit Sweater</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Oatmeal</p>
+</div>
+<div class="text-right">
+<p class="font-body-md text-body-md text-on-surface-variant line-through mb-1">$650</p>
+<p class="font-body-md text-body-md font-medium text-error">$390</p>
+</div>
+</div>
+</a>
+<!-- Product Card 6 -->
+<a class="group block relative cursor-pointer" href="#">
+<div class="absolute top-4 left-4 z-10 border border-primary bg-surface px-3 py-1">
+<span class="font-label-caps text-label-caps text-primary">SALE</span>
+</div>
+<div class="aspect-[3/4] mb-6 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A minimalist editorial image showing wide-leg tailored trousers in a deep olive green. The framing focuses on the waistline and drape of the fabric. The background is a seamless continuation of the light, warm ivory aesthetic, providing high contrast to the dark garment while maintaining an overall airy, sophisticated feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcsy4ILNA679cM2gmAZFlHjmWy8GZUSy5hCdXE0OUFdH6JbJhv6DTuLWHE77WfgX6ts6X_bgBe0Xfm5bwAT52bQFD9W6s7gCS2oHm-z3wHRUwC7nBhcIU3tU8s1QkGObB7s4g_3sSEZfh8p62tcZH_iHHUHu66cDFh10hYTROhCpf-iPKR-sE4tHTP7fKaryqpSuW6duVeiUo8jniV2anoCK9fl0FcGTh35pTSD42cwGqCSha5rhh-Rg"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2">Tailored Wide Trousers</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Olive</p>
+</div>
+<div class="text-right">
+<p class="font-body-md text-body-md text-on-surface-variant line-through mb-1">$420</p>
+<p class="font-body-md text-body-md font-medium text-error">$294</p>
+</div>
+</div>
+</a>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-tertiary-container text-on-surface dark:text-tertiary-fixed font-body-md text-body-md w-full mt-section-gap">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop py-section-gap max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-1 mb-8 md:mb-0">
+<a class="font-display-lg-mobile md:font-display-lg text-headline-sm md:text-headline-sm text-primary dark:text-primary-fixed block mb-6" href="#">Sho.V</a>
+<p class="text-on-surface-variant text-sm">Quiet luxury for the modern wardrobe. Defined by restraint, elevated by detail.</p>
+</div>
+<div class="col-span-1 md:col-span-2 grid grid-cols-2 gap-8">
+<div>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Privacy Policy</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Terms of Service</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Shipping</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Returns</a></li>
+</ul>
+</div>
+<div>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Instagram</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Pinterest</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Journal</a></li>
+</ul>
+</div>
+</div>
+<div class="col-span-1 md:col-span-1 mt-8 md:mt-0">
+<span class="block text-on-surface-variant hover:text-primary transition-colors duration-300 mb-4 cursor-pointer">Newsletter</span>
+<div class="flex border-b border-primary pb-2">
+<input class="bg-transparent border-none outline-none w-full font-body-md text-body-md placeholder:text-on-surface-variant/50 focus:ring-0 p-0 text-primary" placeholder="Email Address" type="email"/>
+<button class="text-primary hover:opacity-70 transition-opacity ml-2">
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="border-t border-outline-variant/20 px-margin-mobile md:px-margin-desktop py-6 max-w-container-max mx-auto text-center md:text-left">
+<p class="text-on-surface-variant text-sm">© 2024 Sho.V. All rights reserved.</p>
+</div>
+</footer>
+</body></html>

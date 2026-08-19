@@ -1,0 +1,77 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        'brand-bg': '#fcfaf7',
+        'brand-dark': '#2c2a29',
+        'brand-accent': '#bc9c85',
+        'brand-accent-hover': '#a6856d',
+        'brand-muted': '#f3f0ec',
+        'brand-border': '#e2ded9',
+
+        // Material Design luxury tokens from Stitch DESIGN.md
+        "surface": "#fbf9f9",
+        "on-surface": "#1b1c1c",
+        "on-surface-variant": "#444748",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-low": "#f5f3f3",
+        "surface-container": "#efeded",
+        "surface-container-high": "#e9e8e7",
+        "surface-container-highest": "#e4e2e2",
+        "primary": "#151616",
+        "on-primary": "#ffffff",
+        "primary-container": "#2a2a2a",
+        "on-primary-container": "#929191",
+        "secondary": "#6d5b49",
+        "on-secondary": "#ffffff",
+        "secondary-container": "#f6dec7",
+        "on-secondary-container": "#73614f",
+        "tertiary": "#141613",
+        "on-tertiary": "#ffffff",
+        "tertiary-container": "#292a27",
+        "on-tertiary-container": "#91918d",
+        "outline": "#747878",
+        "outline-variant": "#c4c7c7",
+        "surface-tint": "#5f5e5e",
+        "error": "#ba1a1a",
+        "error-container": "#ffdad6",
+        "on-error-container": "#93000a"
+      },
+      fontFamily: {
+        serif: ['"Playfair Display"', 'serif'],
+        sans: ['"Montserrat"', '"Jost"', 'sans-serif'],
+        'display-lg': ['"Playfair Display"', 'serif'],
+        'headline-md': ['"Playfair Display"', 'serif'],
+        'headline-sm': ['"Playfair Display"', 'serif'],
+        'body-md': ['"Montserrat"', '"Jost"', 'sans-serif'],
+        'body-lg': ['"Montserrat"', '"Jost"', 'sans-serif'],
+        'label-caps': ['"Montserrat"', '"Jost"', 'sans-serif'],
+        'button': ['"Montserrat"', '"Jost"', 'sans-serif'],
+      },
+      spacing: {
+        'unit': '8px',
+        'container-max': '1440px',
+        'gutter': '24px',
+        'margin-desktop': '80px',
+        'margin-mobile': '20px',
+        'section-gap': '120px',
+      },
+      borderRadius: {
+        'none': '0px',
+        DEFAULT: '0px',
+        'sm': '0px',
+        'md': '0px',
+        'lg': '0px',
+        'xl': '0px',
+        '2xl': '0px',
+        'full': '9999px',
+      }
+    },
+  },
+  plugins: [],
+}

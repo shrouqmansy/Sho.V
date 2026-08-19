@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About Us - Sho.V</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&amp;family=Playfair+Display:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#f6dec7",
+                        "on-secondary-container": "#73614f",
+                        "on-secondary-fixed-variant": "#544433",
+                        "on-background": "#1b1c1c",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#292a27",
+                        "surface": "#fbf9f9",
+                        "on-primary-fixed": "#1b1c1c",
+                        "on-tertiary-fixed-variant": "#464744",
+                        "secondary-container": "#f6dec7",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#5f5e5e",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#474746",
+                        "surface-bright": "#fbf9f9",
+                        "inverse-primary": "#c8c6c5",
+                        "inverse-on-surface": "#f2f0f0",
+                        "surface-container": "#efeded",
+                        "surface-variant": "#e4e2e2",
+                        "on-tertiary-fixed": "#1b1c19",
+                        "primary-container": "#2a2a2a",
+                        "secondary": "#6d5b49",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f5f3f3",
+                        "tertiary-fixed-dim": "#c7c7c2",
+                        "inverse-surface": "#303031",
+                        "on-tertiary-container": "#91918d",
+                        "on-primary-container": "#929191",
+                        "on-surface": "#1b1c1c",
+                        "on-surface-variant": "#444748",
+                        "tertiary": "#141613",
+                        "primary-fixed": "#e4e2e1",
+                        "on-secondary": "#ffffff",
+                        "background": "#fbf9f9",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c4c7c7",
+                        "surface-container-high": "#e9e8e7",
+                        "primary": "#151616",
+                        "surface-container-highest": "#e4e2e2",
+                        "on-secondary-fixed": "#25190b",
+                        "tertiary-fixed": "#e3e3de",
+                        "outline": "#747878",
+                        "surface-dim": "#dbdad9",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "secondary-fixed-dim": "#d9c3ac"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "120px",
+                        "margin-mobile": "20px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "container-max": "1440px",
+                        "margin-desktop": "80px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"],
+                        "body-md": ["Montserrat"],
+                        "body-lg": ["Montserrat"],
+                        "label-caps": ["Montserrat"],
+                        "button": ["Montserrat"],
+                        "headline-sm": ["Playfair Display"],
+                        "display-lg-mobile": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.15em", "fontWeight": "600" }],
+                        "button": ["14px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.2", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #fbf9f9; color: #1b1c1c; }
+        .parallax { background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky z-50 bg-surface border-b border-outline-variant/30 flex flex-col items-center px-margin-mobile md:px-margin-desktop py-unit max-w-container-max mx-auto">
+<div class="w-full flex justify-between items-center py-4">
+<!-- Brand -->
+<a class="font-display-lg text-headline-md tracking-tighter text-primary" href="#">Sho.V</a>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex gap-8 items-center">
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300 cursor-pointer" href="#">Shop</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300 cursor-pointer" href="#">New In</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300 cursor-pointer" href="#">Sale</a>
+<a class="font-label-caps text-label-caps text-primary font-bold border-b border-primary pb-1 cursor-pointer transition-all duration-200" href="#">About</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant font-medium hover:opacity-70 transition-opacity duration-300 cursor-pointer" href="#">Contact</a>
+</nav>
+<!-- Trailing Icons -->
+<div class="flex gap-4 items-center">
+<button class="text-primary hover:opacity-70 transition-opacity duration-300 cursor-pointer"><span class="material-symbols-outlined">language</span></button>
+<button class="text-primary hover:opacity-70 transition-opacity duration-300 cursor-pointer"><span class="material-symbols-outlined">search</span></button>
+<button class="text-primary hover:opacity-70 transition-opacity duration-300 cursor-pointer"><span class="material-symbols-outlined">person</span></button>
+<button class="text-primary hover:opacity-70 transition-opacity duration-300 cursor-pointer"><span class="material-symbols-outlined">shopping_bag</span></button>
+</div>
+</div>
+</header>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="w-full min-h-[80vh] flex flex-col justify-center items-center px-margin-mobile md:px-margin-desktop text-center mt-24 mb-section-gap">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-8 max-w-4xl mx-auto leading-tight">Beyond the Ordinary</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
+                We believe that true luxury lies in intentionality. Sho.V was founded on the principle of stripping away the excess to reveal the essential beauty of craftsmanship, heritage, and thoughtful design.
+            </p>
+</section>
+<!-- Editorial Image 1 -->
+<section class="w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mb-section-gap">
+<div class="w-full h-[60vh] md:h-[80vh] bg-surface-variant relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center parallax" data-alt="A wide editorial shot of an elegant, minimalist fashion atelier bathed in soft natural light. High-end natural fabrics in warm ivory and taupe tones drape elegantly across a large wooden cutting table. In the background, out of focus, tailors work meticulously. The mood is calm, creative, and highly professional, reflecting quiet luxury." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBx_Pni46AQfowBWfrm0x1lj3OxMCh1X1oCdEmOkb1Znq1xvoCFtOicraobBM7l3FzE4nQDXXiRqIPsa12SATn8eY7I4eNVaIzS1mbtJVjrPjS73drMspmrqfwnR3ayghuVthj9m5tmL4qLZr5s2EKbr1Z_CtbYX1LLI8ND9V8swXcnUsSC6Ndxbk2qlbNlCxcX3PsvLy1Wabb2s8CHu28RO9C46PpR9qsTbZ8UNJf52Ho1a8TKDLvvcQ')"></div>
+</div>
+</section>
+<!-- Story Section -->
+<section class="w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mb-section-gap grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<div class="md:col-span-5 md:col-start-2">
+<h2 class="font-headline-md text-headline-md text-primary mb-6">The Art of Subtraction</h2>
+</div>
+<div class="md:col-span-5 flex flex-col gap-6">
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    In a world of constant noise and fleeting trends, we seek permanence. Our design philosophy is rooted in the art of subtraction—removing anything that does not serve a purpose or elevate the form. 
+                </p>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    Every seam, every texture, and every silhouette is considered with an almost obsessive attention to detail. We are not just creating garments; we are curating a wardrobe for the discerning individual who values subtlety over spectacle.
+                </p>
+</div>
+</section>
+<!-- Bento Grid / Craftsmanship -->
+<section class="w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto mb-section-gap">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-unit">
+<div class="md:col-span-7 h-[500px] relative overflow-hidden group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="Close-up detailed macro photography of high-quality woven linen fabric in a light warm ivory color. The texture of the weave is crisp and tactile, illuminated by soft side lighting that highlights the depth of the threads. Quiet luxury aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC3uUbQTGQtSI5vjpmaZwBJbsO4OlClGfKRdumCXRDKdh6RQypP1eINxO2BQZ5Mml38ff-2FYd5jvY_tDsilrqbtznByM8BD8obyxchlKYCS0wZQXtQSDC8OlSUS10qULzrlt20hBeghppzk8CQxeEr-rVm1A8K9kG0Wni8mGWF2UqedB-0D2SLNhbRvkXP0EOOIuxEwP2p3U6-mghnEApnJU4egRPqP39USdTqxdf9Wr4HKOwqNp8aCw')"></div>
+<div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-primary/80 to-transparent w-full">
+<h3 class="font-headline-sm text-headline-sm text-on-primary mb-2">Uncompromising Materials</h3>
+<p class="font-body-md text-body-md text-on-primary/80">Sourced globally, selected locally.</p>
+</div>
+</div>
+<div class="md:col-span-5 flex flex-col gap-unit h-[500px]">
+<div class="flex-grow relative overflow-hidden group bg-surface-container">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" data-alt="A minimalist still life of a pair of vintage tailor scissors and a wooden spool of thick charcoal thread resting on a smooth taupe stone surface. High contrast, clean lighting, sophisticated editorial style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCg_ExkzWodW3qEyRqSXboZ9BL33c28wZo0QuTRDMK9Mu6lDIV4pdve5O7XIp5-J24nWgYqAcctBeJEPZZh2x3A6HPM6q4HjQQ2WZRyTm-xF_UuSoumZpD50Rl4XYqiVNxVzPciGr-NmX9Zy3Wj7JxBh472tC1-_tkHqF7r5pzJZBU_kX3GGnWLiVcFyChXgpINKBLWYXIDnlhgmBn8nFnMUwI3jx6eyAE-PJNz342ezx8ENJgQLGeeWg')"></div>
+</div>
+<div class="h-[200px] bg-secondary-fixed p-8 flex flex-col justify-center">
+<h3 class="font-headline-sm text-headline-sm text-on-secondary-container mb-4">Heritage Techniques</h3>
+<p class="font-body-md text-body-md text-on-secondary-container/80">Preserving the human touch in every stitch.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-surface-container-low mt-section-gap py-section-gap">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<!-- Brand Column -->
+<div class="flex flex-col gap-4">
+<span class="font-display-lg text-headline-sm text-primary">Sho.V</span>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">© 2024 Sho.V. All rights reserved.</p>
+</div>
+<!-- Links Columns -->
+<div class="flex flex-col gap-4 md:col-start-3">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Terms of Service</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Shipping</a>
+</div>
+<div class="flex flex-col gap-4">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Returns</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Newsletter</a>
+</div>
+</div>
+</footer>
+</body></html>
