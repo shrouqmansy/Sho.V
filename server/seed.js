@@ -38,28 +38,39 @@ export async function runScrapingPipeline(options = {}) {
     console.warn('[Multi-Source Scraper Note]: Live Playwright search skipped or unavailable in deployment environment:', err.message);
   }
 
-  // Fallback to pre-scraped products dataset if live scraper produced 0 items
+  // Fallback to database_dump.sql or fallback_products.json if live scraper produced 0 items
   if (!rawProducts || rawProducts.length === 0) {
-    console.log('[STAGE 2 FALLBACK] Loading pre-scraped product dataset from server/fallback_products.json...');
+    console.log('[STAGE 2 FALLBACK] Seeding database from server/database_dump.sql...');
+    try {
+      const fs = await import('fs');
+      const sqlDumpPath = path.resolve(process.cwd(), 'server', 'database_dump.sql');
+      if (fs.existsSync(sqlDumpPath)) {
+        const sqlDump = fs.readFileSync(sqlDumpPath, 'utf-8');
+        await query(sqlDump);
+        const countRes = await query(`SELECT COUNT(*) FROM products`);
+        const total = parseInt(countRes.rows[0].count, 10);
+        console.log(`[STAGE 2 FALLBACK COMPLETE] Inserted ${total} catalog products into PostgreSQL from database_dump.sql.`);
+        return total;
+      }
+    } catch (sqlErr) {
+      console.warn('[STAGE 2 FALLBACK Note]: SQL dump fallback warning:', sqlErr.message);
+    }
+
     try {
       const fs = await import('fs');
       const fallbackPath = path.resolve(process.cwd(), 'server', 'fallback_products.json');
       if (fs.existsSync(fallbackPath)) {
         const fileData = fs.readFileSync(fallbackPath, 'utf-8');
         const fallbackProds = JSON.parse(fileData);
-        console.log(`[STAGE 2 FALLBACK] Loaded ${fallbackProds.length} products from server/fallback_products.json.`);
-        
-        // Insert fallback products directly into PostgreSQL
         let inserted = 0;
         for (const fp of fallbackProds) {
           const saved = await insertScrapedProduct(fp);
           if (saved) inserted++;
         }
-        console.log(`[STAGE 2 FALLBACK COMPLETE] Inserted ${inserted} catalog products into PostgreSQL.`);
         return inserted;
       }
     } catch (fErr) {
-      console.error('[STAGE 2 FALLBACK ERROR]: Could not load fallback_products.json:', fErr.message);
+      console.error('[STAGE 2 FALLBACK ERROR]: Could not load fallback dataset:', fErr.message);
       return 0;
     }
   }
