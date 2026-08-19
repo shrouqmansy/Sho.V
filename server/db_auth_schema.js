@@ -24,6 +24,7 @@ export async function initAuthDb() {
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
   `);
+  await query(`ALTER TABLE tenants ADD COLUMN IF NOT EXISTS owner_user_id VARCHAR(64);`);
 
   await query(`
     CREATE TABLE IF NOT EXISTS user_sessions (

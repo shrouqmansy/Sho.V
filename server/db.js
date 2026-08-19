@@ -16,7 +16,13 @@ export async function getDb() {
   const dbUrl = process.env.DATABASE_URL;
   if (dbUrl && dbUrl.startsWith('postgres')) {
     try {
-      const pool = new pg.Pool({ connectionString: dbUrl });
+      const pool = new pg.Pool({
+        connectionString: dbUrl,
+        ssl: { rejectUnauthorized: false },
+        max: 20,
+        idleTimeoutMillis: 30000,
+        connectionTimeoutMillis: 5000
+      });
       await pool.query('SELECT 1');
       console.log('Connected to PostgreSQL database server via DATABASE_URL');
       dbInstance = pool;
@@ -39,22 +45,13 @@ export async function getDb() {
       fs.mkdirSync(dataDir, { recursive: true });
     }
 
-    console.log(`Initializing PostgreSQL database in ${dataDir}...`);
     const pglite = new PGlite(dataDir);
     dbInstance = pglite;
     useStandardPg = false;
     return dbInstance;
-  } catch (pgErr) {
-    console.warn('PostgreSQL data directory recovery triggered:', pgErr.message);
-    try {
-      fs.rmSync(dataDir, { recursive: true, force: true });
-      fs.mkdirSync(dataDir, { recursive: true });
-    } catch (e) {}
-
-    const pglite = new PGlite(dataDir);
-    dbInstance = pglite;
-    useStandardPg = false;
-    return dbInstance;
+  } catch (err) {
+    console.error('Failed to initialize embedded PGlite:', err);
+    throw err;
   }
 }
 
@@ -253,8 +250,21 @@ export async function getProductWithRelations(productId) {
   return formatProductRecord(prod, imagesRes.rows, colorsRes.rows, sizesRes.rows, reviewsRes.rows);
 }
 
+// In-Memory Fast Cache for Supabase Cloud Database Performance
+let cachedProductsMap = new Map();
+let cacheTimestamp = 0;
+const CACHE_TTL_MS = 15000; // 15 seconds
+
 export async function getAllProductsFromDb(options = {}) {
   const { category, limit = 200, offset = 0 } = options;
+
+  // Check cache for superfast sub-millisecond responses
+  const cacheKey = `${category || 'All'}_${limit}_${offset}`;
+  const now = Date.now();
+  if (cachedProductsMap.has(cacheKey) && (now - cacheTimestamp < CACHE_TTL_MS)) {
+    return cachedProductsMap.get(cacheKey);
+  }
+
   let sql = `SELECT * FROM products`;
   const params = [];
 
@@ -267,12 +277,52 @@ export async function getAllProductsFromDb(options = {}) {
   params.push(limit, offset);
 
   const res = await query(sql, params);
-  const productsList = [];
+  if (res.rows.length === 0) return [];
 
-  for (const prod of res.rows) {
-    const fullProd = await getProductWithRelations(prod.id);
-    if (fullProd) productsList.push(fullProd);
+  const prodIds = res.rows.map(p => p.id);
+
+  // High-performance batch relation fetching (1 single roundtrip instead of 1,000)
+  const [imagesRes, colorsRes, sizesRes, reviewsRes] = await Promise.all([
+    query(`SELECT * FROM product_images WHERE product_id = ANY($1) ORDER BY position ASC`, [prodIds]),
+    query(`SELECT * FROM product_colors WHERE product_id = ANY($1)`, [prodIds]),
+    query(`SELECT * FROM product_sizes WHERE product_id = ANY($1)`, [prodIds]),
+    query(`SELECT * FROM product_reviews WHERE product_id = ANY($1) ORDER BY created_at DESC`, [prodIds])
+  ]);
+
+  const imagesByProd = {};
+  const colorsByProd = {};
+  const sizesByProd = {};
+  const reviewsByProd = {};
+
+  for (const img of imagesRes.rows) {
+    if (!imagesByProd[img.product_id]) imagesByProd[img.product_id] = [];
+    imagesByProd[img.product_id].push(img);
   }
+  for (const col of colorsRes.rows) {
+    if (!colorsByProd[col.product_id]) colorsByProd[col.product_id] = [];
+    colorsByProd[col.product_id].push(col);
+  }
+  for (const sz of sizesRes.rows) {
+    if (!sizesByProd[sz.product_id]) sizesByProd[sz.product_id] = [];
+    sizesByProd[sz.product_id].push(sz);
+  }
+  for (const rev of reviewsRes.rows) {
+    if (!reviewsByProd[rev.product_id]) reviewsByProd[rev.product_id] = [];
+    reviewsByProd[rev.product_id].push(rev);
+  }
+
+  const productsList = res.rows.map(prod => {
+    return formatProductRecord(
+      prod,
+      imagesByProd[prod.id] || [],
+      colorsByProd[prod.id] || [],
+      sizesByProd[prod.id] || [],
+      reviewsByProd[prod.id] || []
+    );
+  });
+
+  cachedProductsMap.set(cacheKey, productsList);
+  cacheTimestamp = Date.now();
 
   return productsList;
 }

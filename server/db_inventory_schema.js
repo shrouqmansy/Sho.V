@@ -15,6 +15,8 @@ export async function initInventoryDb() {
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
   `);
+  await query(`ALTER TABLE product_skus ADD COLUMN IF NOT EXISTS color_name VARCHAR(50) DEFAULT 'Default Color';`);
+  await query(`ALTER TABLE product_skus ADD COLUMN IF NOT EXISTS size_name VARCHAR(20) DEFAULT 'M';`);
 
   await query(`
     CREATE TABLE IF NOT EXISTS sku_inventory (
@@ -27,6 +29,8 @@ export async function initInventoryDb() {
       CONSTRAINT valid_inventory_quantities CHECK (on_hand_quantity >= reserved_quantity)
     );
   `);
+  await query(`ALTER TABLE sku_inventory ADD COLUMN IF NOT EXISTS initial_quantity INTEGER DEFAULT 15;`);
+  await query(`ALTER TABLE sku_inventory ADD COLUMN IF NOT EXISTS sold_quantity INTEGER DEFAULT 0;`);
 
   await query(`
     CREATE TABLE IF NOT EXISTS stock_reservations (
@@ -97,6 +101,13 @@ export async function initInventoryDb() {
 
 export async function seedInitialSkusAndInventory() {
   console.log('Checking & seeding initial SKU inventory records...');
+
+  const existingSkusRes = await query(`SELECT COUNT(*) FROM product_skus`);
+  const existingCount = parseInt(existingSkusRes.rows[0].count, 10);
+  if (existingCount > 0) {
+    console.log(`SKU Inventory ready (${existingCount} existing SKUs loaded).`);
+    return;
+  }
 
   const productsRes = await query(`SELECT id, name FROM products`);
   const products = productsRes.rows;
