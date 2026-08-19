@@ -4,23 +4,23 @@
 
 
 CREATE TABLE IF NOT EXISTS products (
-  id VARCHAR(64) PRIMARY KEY,
+  id VARCHAR(128) PRIMARY KEY,
   name TEXT NOT NULL,
   description TEXT,
-  brand VARCHAR(100),
-  category VARCHAR(100) NOT NULL,
+  brand TEXT,
+  category TEXT NOT NULL,
   price NUMERIC(10,2) NOT NULL,
   original_price NUMERIC(10,2),
   discount_percentage INTEGER,
-  currency VARCHAR(10) DEFAULT 'EGY',
+  currency VARCHAR(20) DEFAULT 'EGY',
   quantity INTEGER DEFAULT 10,
-  availability VARCHAR(50) DEFAULT 'in_stock',
+  availability VARCHAR(100) DEFAULT 'in_stock',
   rating NUMERIC(3,2),
   review_count INTEGER,
-  source VARCHAR(50) DEFAULT 'amazon',
-  source_product_id VARCHAR(100),
+  source VARCHAR(100) DEFAULT 'amazon',
+  source_product_id TEXT,
   source_url TEXT,
-  source_website VARCHAR(50),
+  source_website TEXT,
   video_url TEXT,
   is_new BOOLEAN DEFAULT false,
   is_sale BOOLEAN DEFAULT false,
@@ -30,10 +30,10 @@ CREATE TABLE IF NOT EXISTS products (
 );
 
 CREATE TABLE IF NOT EXISTS product_colors (
-  id VARCHAR(64) PRIMARY KEY,
-  product_id VARCHAR(64) REFERENCES products(id) ON DELETE CASCADE,
-  name VARCHAR(50) NOT NULL,
-  hex_code VARCHAR(10),
+  id VARCHAR(128) PRIMARY KEY,
+  product_id VARCHAR(128) REFERENCES products(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  hex_code VARCHAR(50),
   image_url TEXT,
   sku TEXT,
   source_url TEXT,
@@ -41,31 +41,31 @@ CREATE TABLE IF NOT EXISTS product_colors (
 );
 
 CREATE TABLE IF NOT EXISTS product_images (
-  id VARCHAR(64) PRIMARY KEY,
-  product_id VARCHAR(64) REFERENCES products(id) ON DELETE CASCADE,
+  id VARCHAR(128) PRIMARY KEY,
+  product_id VARCHAR(128) REFERENCES products(id) ON DELETE CASCADE,
   image_url TEXT NOT NULL,
   position INTEGER DEFAULT 0,
-  color_id VARCHAR(64)
+  color_id VARCHAR(128)
 );
 
 CREATE TABLE IF NOT EXISTS product_sizes (
-  id VARCHAR(64) PRIMARY KEY,
-  product_id VARCHAR(64) REFERENCES products(id) ON DELETE CASCADE,
-  name VARCHAR(20) NOT NULL,
+  id VARCHAR(128) PRIMARY KEY,
+  product_id VARCHAR(128) REFERENCES products(id) ON DELETE CASCADE,
+  name VARCHAR(50) NOT NULL,
   available BOOLEAN DEFAULT true
 );
 
 CREATE TABLE IF NOT EXISTS product_skus (
-  id VARCHAR(64) PRIMARY KEY,
-  product_id VARCHAR(64) REFERENCES products(id) ON DELETE CASCADE,
-  color_id VARCHAR(64),
-  size_id VARCHAR(64),
-  sku_code VARCHAR(100) UNIQUE NOT NULL,
+  id VARCHAR(128) PRIMARY KEY,
+  product_id VARCHAR(128) REFERENCES products(id) ON DELETE CASCADE,
+  color_id VARCHAR(128),
+  size_id VARCHAR(128),
+  sku_code TEXT UNIQUE NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS sku_inventory (
-  sku_id VARCHAR(64) PRIMARY KEY REFERENCES product_skus(id) ON DELETE CASCADE,
+  sku_id VARCHAR(128) PRIMARY KEY REFERENCES product_skus(id) ON DELETE CASCADE,
   on_hand_quantity INTEGER NOT NULL DEFAULT 10,
   reserved_quantity INTEGER NOT NULL DEFAULT 0,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
