@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { getApiBaseUrl } from '../data/products';
 
 const AuthContext = createContext();
 
@@ -12,7 +13,7 @@ export function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const [authError, setAuthError] = useState(null);
 
-  const API_BASE = 'http://localhost:3001/api';
+  const API_BASE = getApiBaseUrl();
 
   // Restore Auth Session on Page Load / Token Refresh
   useEffect(() => {

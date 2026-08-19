@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useShop } from '../context/ShopContext';
 import { getSwatchStyle } from '../utils/swatchResolver';
 import { RecommendationSection } from '../components/common/RecommendationSection';
+import { getApiBaseUrl } from '../data/products';
 
 export function ProductDetailPage() {
   const { selectedProduct, navigateTo, addToCart, formatPrice, openCollection, isFavorite, toggleFavorite } = useShop();
@@ -21,7 +22,8 @@ export function ProductDetailPage() {
     if (!p) return;
     async function fetchInventory() {
       try {
-        const res = await fetch(`http://localhost:3001/api/products/${p.id}/inventory`);
+        const baseUrl = getApiBaseUrl();
+        const res = await fetch(`${baseUrl}/products/${p.id}/inventory`);
         if (res.ok) {
           const data = await res.json();
           if (data.success) {

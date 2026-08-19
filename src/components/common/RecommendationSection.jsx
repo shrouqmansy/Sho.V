@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ProductCard } from '../ui/ProductCard';
 import { useAuth } from '../../context/AuthContext';
+import { getApiBaseUrl } from '../../data/products';
 
 export function RecommendationSection({
   title = "Recommended For You",
@@ -28,17 +29,18 @@ export function RecommendationSection({
       setIsLoading(true);
       const sessionId = getSessionId();
       const userId = user ? user.id : '';
+      const baseUrl = getApiBaseUrl();
 
-      let endpoint = `http://localhost:3001/api/recommendations/for-you?sessionId=${sessionId}&limit=${limit}`;
+      let endpoint = `${baseUrl}/recommendations/for-you?sessionId=${sessionId}&limit=${limit}`;
 
       if (type === 'similar' && productId) {
-        endpoint = `http://localhost:3001/api/recommendations/similar/${productId}?sessionId=${sessionId}&limit=${limit}`;
+        endpoint = `${baseUrl}/recommendations/similar/${productId}?sessionId=${sessionId}&limit=${limit}`;
       } else if (type === 'wishlist') {
-        endpoint = `http://localhost:3001/api/recommendations/from-wishlist?sessionId=${sessionId}&limit=${limit}`;
+        endpoint = `${baseUrl}/recommendations/from-wishlist?sessionId=${sessionId}&limit=${limit}`;
       } else if (type === 'history') {
-        endpoint = `http://localhost:3001/api/recommendations/from-history?sessionId=${sessionId}&limit=${limit}`;
+        endpoint = `${baseUrl}/recommendations/from-history?sessionId=${sessionId}&limit=${limit}`;
       } else if (type === 'trending') {
-        endpoint = `http://localhost:3001/api/recommendations/trending?limit=${limit}`;
+        endpoint = `${baseUrl}/recommendations/trending?limit=${limit}`;
       }
 
       if (userId) {

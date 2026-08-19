@@ -112,8 +112,13 @@ async function startServer() {
     await initAuthDb();
     await initInventoryDb();
     await initRecommendationsDb();
-    const existing = await getAllProductsFromDb({ limit: 1 });
-    console.log(`PostgreSQL database ready (${existing.length} existing products).`);
+    let existing = await getAllProductsFromDb({ limit: 1 });
+    if (existing.length === 0) {
+      console.log('[Server Startup] PostgreSQL database is empty. Auto-seeding catalog...');
+      await seedProducts();
+      existing = await getAllProductsFromDb({ limit: 1 });
+    }
+    console.log(`PostgreSQL database ready (${existing.length > 0 ? 'Catalog Loaded' : '0 Products'}).`);
 
     // Start 60-second periodic background reservation cleanup worker
     setInterval(async () => {

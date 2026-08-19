@@ -25,18 +25,43 @@ export async function runScrapingPipeline(options = {}) {
   const initialCountRes = await query(`SELECT COUNT(*) FROM products`);
   console.log(`[STAGE 1 COMPLETE] Database wiped clean. Initial product count: ${initialCountRes.rows[0].count}`);
 
-  // STEP 2: RUN MULTI-SOURCE PLAYWRIGHT SCRAPER
+  // STEP 2: RUN MULTI-SOURCE PLAYWRIGHT SCRAPER (WITH JSON FALLBACK FOR DEPLOYED SERVERS)
   console.log('\n[STAGE 2] Launching Playwright Chromium for multi-source live fashion extraction...');
   let rawProducts = [];
   try {
     const pythonScript = path.resolve(process.cwd(), 'server', 'browser_scraper.py');
     const flag = isTestMode ? '--test' : '';
-    const stdout = execSync(`python "${pythonScript}" ${flag}`, { encoding: 'utf-8', maxBuffer: 30 * 1024 * 1024 });
+    const stdout = execSync(`python "${pythonScript}" ${flag}`, { encoding: 'utf-8', maxBuffer: 30 * 1024 * 1024, timeout: 20000 });
     rawProducts = JSON.parse(stdout);
     console.log(`[STAGE 2 COMPLETE] Multi-Source Playwright Scraper extracted ${rawProducts.length} authentic raw products.`);
   } catch (err) {
-    console.error('[Multi-Source Scraper Error]: Live Playwright search failed:', err.message);
-    return 0;
+    console.warn('[Multi-Source Scraper Note]: Live Playwright search skipped or unavailable in deployment environment:', err.message);
+  }
+
+  // Fallback to pre-scraped products dataset if live scraper produced 0 items
+  if (!rawProducts || rawProducts.length === 0) {
+    console.log('[STAGE 2 FALLBACK] Loading pre-scraped product dataset from server/fallback_products.json...');
+    try {
+      const fs = await import('fs');
+      const fallbackPath = path.resolve(process.cwd(), 'server', 'fallback_products.json');
+      if (fs.existsSync(fallbackPath)) {
+        const fileData = fs.readFileSync(fallbackPath, 'utf-8');
+        const fallbackProds = JSON.parse(fileData);
+        console.log(`[STAGE 2 FALLBACK] Loaded ${fallbackProds.length} products from server/fallback_products.json.`);
+        
+        // Insert fallback products directly into PostgreSQL
+        let inserted = 0;
+        for (const fp of fallbackProds) {
+          const saved = await insertScrapedProduct(fp);
+          if (saved) inserted++;
+        }
+        console.log(`[STAGE 2 FALLBACK COMPLETE] Inserted ${inserted} catalog products into PostgreSQL.`);
+        return inserted;
+      }
+    } catch (fErr) {
+      console.error('[STAGE 2 FALLBACK ERROR]: Could not load fallback_products.json:', fErr.message);
+      return 0;
+    }
   }
 
   // STEP 3: NORMALIZE PRODUCT PAYLOADS

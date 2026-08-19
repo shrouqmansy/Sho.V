@@ -1,21 +1,39 @@
-// Dynamic API client for PostgreSQL backend
-const API_BASE_URL = 'http://localhost:3001/api';
+import { fallbackProducts } from './fallbackProducts';
 
-// Fetch all products from PostgreSQL database
+// Dynamic API client for PostgreSQL backend
+export const getApiBaseUrl = () => {
+  if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  if (typeof window !== 'undefined' && window.location?.hostname && window.location.hostname !== 'localhost') {
+    return `${window.location.protocol}//${window.location.hostname}:3001/api`;
+  }
+  return 'http://localhost:3001/api';
+};
+
+// Fetch all products from PostgreSQL database with fallback dataset resilience
 export async function fetchProductsFromDb(category = 'All') {
   try {
+    const baseUrl = getApiBaseUrl();
     const url = category && category !== 'All'
-      ? `${API_BASE_URL}/products?category=${encodeURIComponent(category)}`
-      : `${API_BASE_URL}/products`;
+      ? `${baseUrl}/products?category=${encodeURIComponent(category)}`
+      : `${baseUrl}/products`;
 
     const res = await fetch(url);
     if (!res.ok) throw new Error(`API HTTP Error ${res.status}`);
     const data = await res.json();
-    return data.products || [];
+    if (data.products && data.products.length > 0) {
+      return data.products;
+    }
   } catch (err) {
-    console.error('Failed to fetch products from PostgreSQL backend API:', err);
-    return [];
+    console.warn('API fetch unavailable, using embedded fallback product dataset:', err.message);
   }
+
+  // Client-side fallback if API is unreachable or DB is empty
+  if (category && category !== 'All') {
+    return fallbackProducts.filter(p => p.category && p.category.toLowerCase() === category.toLowerCase());
+  }
+  return fallbackProducts;
 }
 
 // Search or discover products using PostgreSQL + Browser Agent API
@@ -23,7 +41,8 @@ export async function searchProductsApi(query) {
   if (!query || !query.trim()) return { products: [], isClothing: true, triggeredAgent: false };
 
   try {
-    const url = `${API_BASE_URL}/products/search?q=${encodeURIComponent(query.trim())}`;
+    const baseUrl = getApiBaseUrl();
+    const url = `${baseUrl}/products/search?q=${encodeURIComponent(query.trim())}`;
     const res = await fetch(url);
     if (!res.ok) throw new Error(`API HTTP Error ${res.status}`);
     const data = await res.json();
@@ -35,8 +54,10 @@ export async function searchProductsApi(query) {
       message: data.message || null
     };
   } catch (err) {
-    console.error('Failed to search/discover products via API:', err);
-    return { products: [], isClothing: true, triggeredAgent: false, error: err.message };
+    console.warn('Failed to search products via API, using fallback search:', err.message);
+    const qLower = query.trim().toLowerCase();
+    const matched = fallbackProducts.filter(p => p.name.toLowerCase().includes(qLower) || p.category.toLowerCase().includes(qLower));
+    return { products: matched, isClothing: true, triggeredAgent: false, error: err.message };
   }
 }
 
@@ -49,5 +70,5 @@ export const collections = [
   { id: 'col-denim', name: 'DENIM', image: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1000&auto=format&fit=crop' }
 ];
 
-// Fallback exported products array (empty array to ensure legacy imports resolve safely)
-export const products = [];
+// Fallback exported products array
+export const products = fallbackProducts;
