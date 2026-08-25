@@ -62,6 +62,7 @@ export async function initRecommendationsDb() {
   await query(`CREATE INDEX IF NOT EXISTS idx_user_events_user ON user_events(user_id, timestamp);`);
   await query(`CREATE INDEX IF NOT EXISTS idx_user_events_type ON user_events(event_type);`);
   await query(`CREATE INDEX IF NOT EXISTS idx_user_events_product ON user_events(product_id);`);
+  await query(`CREATE INDEX IF NOT EXISTS idx_user_events_prod_type ON user_events(product_id, event_type);`);
   await query(`CREATE INDEX IF NOT EXISTS idx_rec_analytics_action ON recommendation_analytics(action, recommendation_type);`);
 
   // Seed default configurable weights if not present

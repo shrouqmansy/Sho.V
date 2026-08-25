@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useShop } from '../context/ShopContext';
 import { ProductCard } from '../components/ui/ProductCard';
+import { ProductSkeleton } from '../components/ui/ProductSkeleton';
 
 export function ShopPage() {
   const { categoryFilter, setCategoryFilter, dbProducts, isDbLoading } = useShop();
@@ -166,8 +167,10 @@ export function ShopPage() {
         </div>
 
         {isDbLoading ? (
-          <div className="py-20 text-center text-gray-500 text-sm">
-            Loading products from PostgreSQL database...
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 sm:gap-x-6 gap-y-8 sm:gap-y-12">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+              <ProductSkeleton key={i} />
+            ))}
           </div>
         ) : categoryProducts.length === 0 ? (
           <div className="py-20 text-center text-gray-500 text-sm">

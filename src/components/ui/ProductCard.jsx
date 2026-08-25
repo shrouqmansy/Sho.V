@@ -60,6 +60,8 @@ export function ProductCard({ product, isLarge = false }) {
         <img
           src={currentImage}
           alt={product.name}
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
         />
 

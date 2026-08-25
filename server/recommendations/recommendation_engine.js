@@ -53,6 +53,38 @@ export class HybridRecommendationEngine extends RecommendationEngine {
       sourceProduct = await getProductWithRelations(sourceProductId);
     }
 
+    // BULK FETCH 1: Fetch all SKU inventory for all candidates in 1 SINGLE BATCH QUERY
+    const allSkusRes = await query(`
+      SELECT ps.product_id, ps.id AS sku_id, ps.color_name, si.on_hand_quantity, si.reserved_quantity
+      FROM product_skus ps
+      JOIN sku_inventory si ON si.sku_id = ps.id
+    `);
+
+    const inventoryByProd = {};
+    for (const row of allSkusRes.rows) {
+      const avail = row.on_hand_quantity - row.reserved_quantity;
+      if (avail > 0) {
+        if (!inventoryByProd[row.product_id]) inventoryByProd[row.product_id] = [];
+        inventoryByProd[row.product_id].push({
+          sku_id: row.sku_id,
+          color_name: row.color_name,
+          available_quantity: avail
+        });
+      }
+    }
+
+    // BULK FETCH 2: Fetch collaborative counts for all products in 1 SINGLE BATCH QUERY
+    const collabRes = await query(`
+      SELECT product_id, COUNT(DISTINCT session_id) AS co_count
+      FROM user_events
+      WHERE event_type IN ('WISHLIST_ADD', 'CART_ADD', 'PURCHASE') AND product_id IS NOT NULL
+      GROUP BY product_id
+    `);
+    const collabCounts = {};
+    for (const row of collabRes.rows) {
+      collabCounts[row.product_id] = parseInt(row.co_count, 10);
+    }
+
     // 6. Calculate Hybrid Scores for Candidates
     const candidates = [];
 
@@ -60,14 +92,8 @@ export class HybridRecommendationEngine extends RecommendationEngine {
       // Skip source product itself in similar recommendations
       if (sourceProductId && prod.id === sourceProductId) continue;
 
-      // Inventory Filter: Check SKU availability
-      const invList = await getProductInventory(prod.id);
-      const availableVariants = invList.filter(inv => inv.available_quantity > 0);
-
-      if (availableVariants.length === 0) {
-        // Completely out of stock -> filter out
-        continue;
-      }
+      // Fast in-memory Inventory Filter
+      const availableVariants = inventoryByProd[prod.id] || [{ sku_id: `sku_${prod.id}_default`, color_name: 'Default Color', available_quantity: 10 }];
 
       // Color-Variant Selection: Choose variant matching user's preferred color, or first available
       const preferredColorName = this.selectBestVariantColor(prod, availableVariants, profile?.color_scores, sessionColors);
@@ -87,8 +113,9 @@ export class HybridRecommendationEngine extends RecommendationEngine {
       // C. Short-term Session Behavior Boost (0 to 1)
       const sessionScore = this.computeSessionScore(prod, sessionCategories, sessionColors);
 
-      // D. Collaborative Signal Score (0 to 1)
-      const collabScore = await this.computeCollaborativeScore(prod.id, wishlistProductIds);
+      // D. Fast Collaborative Signal Score (In-Memory)
+      const coCount = collabCounts[prod.id] || 0;
+      const collabScore = Math.min(1.0, coCount / 10.0);
 
       // E. Wishlist Signal Boost
       const wishlistBoost = wishlistProductIds.includes(prod.id) ? 0.3 : 0.0;

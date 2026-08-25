@@ -47,46 +47,47 @@ export async function searchOrDiscoverProducts(searchQuery, sessionId = null, us
   console.log(`[Intelligent Search STAGE 1] Found ${rankedDbResults.length} relevant products in PostgreSQL (Min Threshold = 25).`);
 
   // Log Search Event to PostgreSQL for AI Recommendations
+  // Log Search Event asynchronously
   const effectiveSessionId = sessionId || `sess_search_${Date.now()}`;
   setImmediate(() => {
     logSearchEvent(effectiveSessionId, userId, queryClean, intent, rankedDbResults.length);
   });
 
-  // If Database contains relevant products (>= 1) -> return database results immediately
-  if (rankedDbResults.length >= 1) {
-    return {
-      query: queryClean,
-      isClothing: true,
-      products: rankedDbResults,
-      source: 'database',
-      scraped: false,
-      count: rankedDbResults.length
-    };
+  // If Database contains matches or catalog items -> return database results immediately (< 50ms)
+  // If DB results are sparse (< 3), launch scraper fallback in the BACKGROUND (non-blocking)
+  let scrapingInBackground = false;
+
+  if (rankedDbResults.length < 3) {
+    scrapingInBackground = true;
+    console.log(`[Intelligent Search STAGE 2] Triggering Scraper Fallback in BACKGROUND for '${queryClean}'...`);
+    
+    setImmediate(async () => {
+      try {
+        const expandedScraperQuery = buildScraperSearchQuery(intent);
+        const categoryMatch = (intent.garment || 'TOPS').toUpperCase();
+        console.log(`[Background Scraper] Querying web for '${expandedScraperQuery}'...`);
+        const discoveredItems = await discoveryService.discoverProducts(expandedScraperQuery, categoryMatch);
+        console.log(`[Background Scraper Complete] Extracted & saved ${discoveredItems.length} new products into PostgreSQL.`);
+      } catch (sErr) {
+        console.warn('[Background Scraper Error]:', sErr.message);
+      }
+    });
   }
 
-  // STAGE 2: Scraper Fallback with Expanded Clothing Search Query
-  console.log(`[Intelligent Search STAGE 2] Insufficient DB results (${rankedDbResults.length}). Launching Scraper Fallback...`);
-
-  const expandedScraperQuery = buildScraperSearchQuery(intent);
-  const categoryMatch = (intent.garment || 'TOPS').toUpperCase();
-
-  console.log(`[Intelligent Search STAGE 2] Expanded Scraper Query: '${expandedScraperQuery}'`);
-
-  const discoveredItems = await discoveryService.discoverProducts(expandedScraperQuery, categoryMatch);
-
-  // Re-query PostgreSQL database after scraper normalization & deduplication insertion
-  const updatedDbCandidates = await searchProductsInDb(queryClean);
-  const wideCatalogAfter = await getAllProductsFromDb({ limit: 400 });
-  const finalRankedResults = rankAndFilterProducts([...updatedDbCandidates, ...wideCatalogAfter], intent);
+  // Fallback to wider catalog if exact search yielded 0 items so customer ALWAYS sees products immediately!
+  let returnProducts = rankedDbResults;
+  if (returnProducts.length === 0) {
+    returnProducts = allCatalogCandidates.slice(0, 12);
+  }
 
   return {
     query: queryClean,
     isClothing: true,
-    products: finalRankedResults.length > 0 ? finalRankedResults : rankedDbResults,
-    source: discoveredItems.length > 0 ? 'database+scraper' : 'database_fallback',
-    scraped: discoveredItems.length > 0,
-    countDiscovered: discoveredItems.length,
-    count: finalRankedResults.length
+    products: returnProducts,
+    source: 'database',
+    scraped: false,
+    scrapingInBackground,
+    count: returnProducts.length
   };
 }
 

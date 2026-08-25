@@ -164,6 +164,9 @@ export async function initDb() {
   await query(`CREATE INDEX IF NOT EXISTS idx_products_category ON products(category);`);
   await query(`CREATE INDEX IF NOT EXISTS idx_products_source_url ON products(source_url);`);
   await query(`CREATE INDEX IF NOT EXISTS idx_products_source_pid ON products(source, source_product_id);`);
+  await query(`CREATE INDEX IF NOT EXISTS idx_products_category_created ON products(category, created_at DESC);`);
+  await query(`CREATE INDEX IF NOT EXISTS idx_products_created_desc ON products(created_at DESC);`);
+  await query(`CREATE INDEX IF NOT EXISTS idx_product_images_prod_pos ON product_images(product_id, position ASC);`);
 
   console.log('PostgreSQL database schemas ready.');
 }
@@ -281,12 +284,12 @@ export async function getAllProductsFromDb(options = {}) {
 
   const prodIds = res.rows.map(p => p.id);
 
-  // High-performance batch relation fetching (1 single roundtrip instead of 1,000)
+  const placeholders = prodIds.map((_, i) => `$${i + 1}`).join(',');
   const [imagesRes, colorsRes, sizesRes, reviewsRes] = await Promise.all([
-    query(`SELECT * FROM product_images WHERE product_id = ANY($1) ORDER BY position ASC`, [prodIds]),
-    query(`SELECT * FROM product_colors WHERE product_id = ANY($1)`, [prodIds]),
-    query(`SELECT * FROM product_sizes WHERE product_id = ANY($1)`, [prodIds]),
-    query(`SELECT * FROM product_reviews WHERE product_id = ANY($1) ORDER BY created_at DESC`, [prodIds])
+    query(`SELECT * FROM product_images WHERE product_id IN (${placeholders}) ORDER BY position ASC`, prodIds),
+    query(`SELECT * FROM product_colors WHERE product_id IN (${placeholders})`, prodIds),
+    query(`SELECT * FROM product_sizes WHERE product_id IN (${placeholders})`, prodIds),
+    query(`SELECT * FROM product_reviews WHERE product_id IN (${placeholders}) ORDER BY created_at DESC`, prodIds)
   ]);
 
   const imagesByProd = {};
