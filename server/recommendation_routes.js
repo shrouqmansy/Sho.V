@@ -72,12 +72,22 @@ router.post('/recommendations/events', async (req, res) => {
   }
 });
 
+const recCache = new Map();
+const REC_CACHE_TTL = 60000; // 60 seconds
+
 // 2. GET /api/recommendations/for-you
 router.get('/recommendations/for-you', async (req, res) => {
   try {
     const { userId, sessionId, limit } = req.query;
     const targetId = userId || sessionId || 'anonymous';
     const isUser = Boolean(userId);
+    const cacheKey = `for_you_${targetId}_${limit || 12}`;
+
+    const now = Date.now();
+    if (recCache.has(cacheKey) && (now - recCache.get(cacheKey).ts < REC_CACHE_TTL)) {
+      const recommendations = recCache.get(cacheKey).data;
+      return res.json({ success: true, type: 'for_you', count: recommendations.length, recommendations });
+    }
 
     const recommendations = await engine.generateRecommendations({
       userOrSessionId: targetId,
@@ -85,6 +95,8 @@ router.get('/recommendations/for-you', async (req, res) => {
       type: 'for_you',
       limit: limit ? parseInt(limit, 10) : 12
     });
+
+    recCache.set(cacheKey, { ts: now, data: recommendations });
 
     // Track impressions asynchronously
     setImmediate(() => {
