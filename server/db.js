@@ -172,6 +172,12 @@ export async function initDb() {
   await query(`CREATE INDEX IF NOT EXISTS idx_products_created_desc ON products(created_at DESC);`);
   await query(`CREATE INDEX IF NOT EXISTS idx_product_images_prod_pos ON product_images(product_id, position ASC);`);
 
+  await query(`
+    UPDATE product_colors 
+    SET name = 'Light Blue', hex_code = '#64B5F6' 
+    WHERE product_id = 'prod_b6d9520932e82f58' AND (name ILIKE 'purple' OR hex_code ILIKE '#7B1FA2');
+  `);
+
   console.log('PostgreSQL database schemas ready.');
 }
 
