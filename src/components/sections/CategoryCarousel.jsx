@@ -86,7 +86,7 @@ export function CategoryCarousel() {
                 <img
                   src={cat.image}
                   alt={cat.name}
-                  className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-700 ease-out"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
 
                 {/* Dark Gradient Overlay */}

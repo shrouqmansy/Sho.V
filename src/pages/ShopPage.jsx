@@ -101,7 +101,7 @@ export function ShopPage() {
             <img
               src={mainFeatureCategory.image}
               alt={mainFeatureCategory.name}
-              className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-700 ease-in-out"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
             />
             <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300" />
             <div className="absolute inset-0 flex items-center justify-center text-center p-2 sm:p-4">
@@ -122,7 +122,7 @@ export function ShopPage() {
                 <img
                   src={cat.image}
                   alt={cat.name}
-                  className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-700 ease-in-out"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
                 />
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300" />
                 <div className="absolute inset-0 flex items-center justify-center text-center p-1.5 sm:p-4">
