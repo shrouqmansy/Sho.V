@@ -215,6 +215,24 @@ export async function initDb() {
     WHERE product_id = 'prod_083966b28f77968e';
   `);
 
+  await query(`
+    UPDATE products 
+    SET image_url = 'https://images.unsplash.com/photo-1548624149-f1e948c2a8f8?w=800&auto=format&fit=crop' 
+    WHERE id = 'prod_aa9b96bb4ef1be43' OR (name ILIKE '%M Sou%' AND name ILIKE '%long sleeves%');
+  `);
+
+  await query(`
+    UPDATE product_images 
+    SET image_url = 'https://images.unsplash.com/photo-1548624149-f1e948c2a8f8?w=800&auto=format&fit=crop' 
+    WHERE product_id = 'prod_aa9b96bb4ef1be43';
+  `);
+
+  await query(`
+    UPDATE product_colors 
+    SET image_url = 'https://images.unsplash.com/photo-1548624149-f1e948c2a8f8?w=800&auto=format&fit=crop' 
+    WHERE product_id = 'prod_aa9b96bb4ef1be43';
+  `);
+
   console.log('PostgreSQL database schemas ready.');
 }
 
