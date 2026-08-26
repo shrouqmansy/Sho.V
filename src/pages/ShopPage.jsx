@@ -71,6 +71,14 @@ export function ShopPage() {
     ? dbProducts.filter(p => p.category && p.category.toLowerCase() === categoryFilter.toLowerCase())
     : dbProducts;
 
+  const [visibleCount, setVisibleCount] = React.useState(12);
+
+  React.useEffect(() => {
+    setVisibleCount(12);
+  }, [categoryFilter]);
+
+  const displayedProducts = categoryProducts.slice(0, visibleCount);
+
   return (
     <main className="w-full max-w-[1400px] mx-auto px-3 sm:px-8 py-4 sm:py-10 flex-grow space-y-10">
       {/* 1. VISUAL CATEGORY CARDS GRID (Restored at Top when viewing All) */}
@@ -85,19 +93,19 @@ export function ShopPage() {
             </h2>
           </div>
 
-          {/* Feature Category Banner (Dresses) */}
+          {/* Main Hero Category Card (Dresses) */}
           <div
             onClick={() => setCategoryFilter(mainFeatureCategory.name)}
-            className="w-full aspect-[16/10] sm:aspect-[21/9] bg-white relative overflow-hidden cursor-pointer group shadow-sm border border-[#e2ded9]"
+            className="w-full aspect-[21/9] bg-white relative overflow-hidden cursor-pointer group shadow-sm border border-[#e2ded9]"
           >
             <img
               src={mainFeatureCategory.image}
               alt={mainFeatureCategory.name}
-              className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-700 ease-in-out"
+              className="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-700 ease-in-out"
             />
-            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300" />
-            <div className="absolute inset-0 flex items-center justify-center text-center p-2 sm:p-4">
-              <h2 className={`text-3xl sm:text-5xl md:text-6xl text-white drop-shadow-lg tracking-wide ${mainFeatureCategory.fontStyle}`}>
+            <div className="absolute inset-0 bg-black/35 group-hover:bg-black/45 transition-colors duration-300" />
+            <div className="absolute inset-0 flex items-center justify-center text-center p-4">
+              <h2 className={`text-4xl sm:text-6xl md:text-7xl text-white drop-shadow-md tracking-wider ${mainFeatureCategory.fontStyle}`}>
                 {mainFeatureCategory.name}
               </h2>
             </div>
@@ -164,6 +172,9 @@ export function ShopPage() {
           <h1 className="font-serif text-3xl md:text-5xl text-[#151616] uppercase tracking-wider font-light">
             {categoryFilter === 'All' ? "All Women's Products" : categoryFilter} ({categoryProducts.length} Items)
           </h1>
+          <p className="text-xs text-gray-500 mt-1 font-light">
+            Showing initial 12 of {categoryProducts.length} items
+          </p>
         </div>
 
         {isDbLoading ? (
@@ -177,10 +188,24 @@ export function ShopPage() {
             No products currently available in {categoryFilter}. Use search to trigger Product Discovery Service!
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 sm:gap-x-6 gap-y-8 sm:gap-y-12">
-            {categoryProducts.map(prod => (
-              <ProductCard key={prod.id} product={prod} />
-            ))}
+          <div className="space-y-10">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 sm:gap-x-6 gap-y-8 sm:gap-y-12">
+              {displayedProducts.map(prod => (
+                <ProductCard key={prod.id} product={prod} />
+              ))}
+            </div>
+
+            {/* Progressive Loading: Load More (+12) Button */}
+            {visibleCount < categoryProducts.length && (
+              <div className="text-center pt-8 border-t border-[#e2ded9]">
+                <button
+                  onClick={() => setVisibleCount(prev => prev + 12)}
+                  className="px-8 py-3.5 bg-[#151616] hover:bg-[#bc9c85] text-white text-xs font-semibold uppercase tracking-widest transition-colors duration-300 shadow-sm"
+                >
+                  Load More Products (+12) — {categoryProducts.length - visibleCount} Remaining
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

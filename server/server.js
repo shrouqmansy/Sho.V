@@ -32,7 +32,7 @@ app.get('/api/products', async (req, res) => {
     const { category, limit, offset } = req.query;
     const products = await getAllProductsFromDb({
       category,
-      limit: limit ? parseInt(limit, 10) : 40,
+      limit: limit ? parseInt(limit, 10) : 12,
       offset: offset ? parseInt(offset, 10) : 0
     });
     res.json({ success: true, count: products.length, products });
