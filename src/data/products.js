@@ -5,10 +5,7 @@ export const getApiBaseUrl = () => {
   if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
-  if (typeof window !== 'undefined' && window.location?.hostname && window.location.hostname !== 'localhost') {
-    return `${window.location.protocol}//${window.location.hostname}:3001/api`;
-  }
-  return 'http://localhost:3001/api';
+  return '/api';
 };
 
 // Fetch all products from PostgreSQL database with fallback dataset resilience
