@@ -112,6 +112,10 @@ export async function initDb() {
     );
   `);
 
+  await query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS discount_price NUMERIC;`);
+  await query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS discount_percentage INTEGER;`);
+  await query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS source_website TEXT;`);
+
   await query(`
     CREATE TABLE IF NOT EXISTS product_images (
       id VARCHAR(64) PRIMARY KEY,
@@ -265,22 +269,33 @@ export async function getProductWithRelations(productId) {
   return formatProductRecord(prod, imagesRes.rows, colorsRes.rows, sizesRes.rows, reviewsRes.rows);
 }
 
-// In-Memory Fast Cache for Supabase Cloud Database Performance
-let cachedProductsMap = new Map();
-let cacheTimestamp = 0;
-const CACHE_TTL_MS = 15000; // 15 seconds
+// High-Performance Server-Side Cache for Supabase Cloud Database (5-Minute TTL)
+const catalogCache = new Map();
+const CATALOG_CACHE_TTL_MS = 300000; // 5 minutes
+
+export function clearCatalogCache() {
+  catalogCache.clear();
+}
 
 export async function getAllProductsFromDb(options = {}) {
-  const { category, limit = 200, offset = 0 } = options;
+  const { category, limit = 12, offset = 0 } = options;
 
-  // Check cache for superfast sub-millisecond responses
-  const cacheKey = `${category || 'All'}_${limit}_${offset}`;
+  // Check 5-minute per-key server cache for instant sub-millisecond responses (< 1ms)
+  const cacheKey = `${(category || 'All').toLowerCase()}_${limit}_${offset}`;
   const now = Date.now();
-  if (cachedProductsMap.has(cacheKey) && (now - cacheTimestamp < CACHE_TTL_MS)) {
-    return cachedProductsMap.get(cacheKey);
+  if (catalogCache.has(cacheKey)) {
+    const entry = catalogCache.get(cacheKey);
+    if (now - entry.timestamp < CATALOG_CACHE_TTL_MS) {
+      return entry.data;
+    }
   }
 
-  let sql = `SELECT * FROM products`;
+  let sql = `
+    SELECT id, name, brand, category, price, original_price, discount_price, discount_percentage,
+           currency, quantity, availability, rating, review_count, source, source_product_id,
+           source_url, source_website, is_new, is_sale, image_url
+    FROM products
+  `;
   const params = [];
 
   if (category && category.toLowerCase() !== 'all') {
@@ -295,19 +310,18 @@ export async function getAllProductsFromDb(options = {}) {
   if (res.rows.length === 0) return [];
 
   const prodIds = res.rows.map(p => p.id);
-
   const placeholders = prodIds.map((_, i) => `$${i + 1}`).join(',');
-  const [imagesRes, colorsRes, sizesRes, reviewsRes] = await Promise.all([
-    query(`SELECT * FROM product_images WHERE product_id IN (${placeholders}) ORDER BY position ASC`, prodIds),
-    query(`SELECT * FROM product_colors WHERE product_id IN (${placeholders})`, prodIds),
-    query(`SELECT * FROM product_sizes WHERE product_id IN (${placeholders})`, prodIds),
-    query(`SELECT * FROM product_reviews WHERE product_id IN (${placeholders}) ORDER BY created_at DESC`, prodIds)
+
+  // Fetch only images and color swatches needed by product listing cards (skip heavy product_reviews)
+  const [imagesRes, colorsRes, sizesRes] = await Promise.all([
+    query(`SELECT product_id, image_url, position FROM product_images WHERE product_id IN (${placeholders}) ORDER BY position ASC`, prodIds),
+    query(`SELECT id, product_id, name, hex_code, image_url, price FROM product_colors WHERE product_id IN (${placeholders})`, prodIds),
+    query(`SELECT product_id, name, available FROM product_sizes WHERE product_id IN (${placeholders})`, prodIds)
   ]);
 
   const imagesByProd = {};
   const colorsByProd = {};
   const sizesByProd = {};
-  const reviewsByProd = {};
 
   for (const img of imagesRes.rows) {
     if (!imagesByProd[img.product_id]) imagesByProd[img.product_id] = [];
@@ -321,10 +335,6 @@ export async function getAllProductsFromDb(options = {}) {
     if (!sizesByProd[sz.product_id]) sizesByProd[sz.product_id] = [];
     sizesByProd[sz.product_id].push(sz);
   }
-  for (const rev of reviewsRes.rows) {
-    if (!reviewsByProd[rev.product_id]) reviewsByProd[rev.product_id] = [];
-    reviewsByProd[rev.product_id].push(rev);
-  }
 
   const productsList = res.rows.map(prod => {
     return formatProductRecord(
@@ -332,13 +342,11 @@ export async function getAllProductsFromDb(options = {}) {
       imagesByProd[prod.id] || [],
       colorsByProd[prod.id] || [],
       sizesByProd[prod.id] || [],
-      reviewsByProd[prod.id] || []
+      []
     );
   });
 
-  cachedProductsMap.set(cacheKey, productsList);
-  cacheTimestamp = Date.now();
-
+  catalogCache.set(cacheKey, { timestamp: now, data: productsList });
   return productsList;
 }
 
