@@ -95,17 +95,7 @@ export function RecommendationSection({
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-6 gap-y-8 sm:gap-y-12">
           {recommendations.map(rec => (
-            <div key={rec.product.id} className="relative group">
-              {/* Optional AI Match Reason Badge */}
-              {rec.reason && (
-                <div className="absolute top-2 left-2 z-20 bg-[#151616]/90 text-white text-[9px] px-2 py-0.5 font-sans font-medium uppercase tracking-wider shadow-sm pointer-events-none">
-                  {rec.reason}
-                </div>
-              )}
-
-              {/* Standard Sho.V ProductCard Component */}
-              <ProductCard product={rec.product} />
-            </div>
+            <ProductCard key={rec.product.id} product={rec.product} />
           ))}
         </div>
       )}
