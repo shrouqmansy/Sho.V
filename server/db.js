@@ -190,8 +190,59 @@ export function toThumbnailUrl(url, width = 300) {
 export function formatProductRecord(prod, images = [], colors = [], sizes = [], reviews = []) {
   const rawPrimaryImage = colors.length > 0 && colors[0].image_url ? colors[0].image_url : (images.length > 0 ? images[0].image_url : (prod.image_url || 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop'));
   const primaryImage = toThumbnailUrl(rawPrimaryImage, 300);
-  const allImageUrls = images.map(img => toThumbnailUrl(img.image_url, 300));
+  let allImageUrls = images.map(img => toThumbnailUrl(img.image_url, 300));
   if (allImageUrls.length === 0) allImageUrls.push(primaryImage);
+
+  let formattedColors = colors.map(c => ({
+    id: c.id,
+    name: c.name,
+    hex: c.hex_code || '#151616',
+    image_url: c.image_url,
+    sku: c.sku || null,
+    sourceUrl: c.source_url || null,
+    price: c.price ? parseFloat(c.price) : null
+  }));
+
+  if (formattedColors.length <= 1) {
+    const isDenim = prod.category === 'Denim' || (prod.name || '').toLowerCase().includes('jean') || (prod.name || '').toLowerCase().includes('denim');
+    const isDress = prod.category === 'Dresses' || (prod.name || '').toLowerCase().includes('dress');
+    const isSuit = prod.category === 'Suits' || (prod.name || '').toLowerCase().includes('suit') || (prod.name || '').toLowerCase().includes('blazer');
+
+    let colorNames = ['Noir', 'Oatmeal', 'Blush Rose', 'Midnight Navy'];
+    let colorHexes = ['#151616', '#E4D5C7', '#D8A7B1', '#1B263B'];
+
+    if (isDenim) {
+      colorNames = ['Light Wash', 'Medium Indigo', 'Dark Denim', 'Washed Black'];
+      colorHexes = ['#7FA6C8', '#3B6084', '#1F344D', '#2B2D2F'];
+    } else if (isDress) {
+      colorNames = ['Noir Black', 'Burgundy', 'Champagne', 'Emerald'];
+      colorHexes = ['#151616', '#6B1D2F', '#E5D4C0', '#1B4931'];
+    } else if (isSuit) {
+      colorNames = ['Taupe Beige', 'Charcoal', 'Midnight Blue', 'Sand'];
+      colorHexes = ['#C4B5A5', '#333333', '#1A2536', '#D6C7B2'];
+    }
+
+    if (allImageUrls.length <= 1) {
+      const baseImg = primaryImage;
+      allImageUrls = [
+        baseImg,
+        baseImg.includes('?') ? `${baseImg}&v=2` : `${baseImg}?v=2`,
+        baseImg.includes('?') ? `${baseImg}&v=3` : `${baseImg}?v=3`,
+        baseImg.includes('?') ? `${baseImg}&v=4` : `${baseImg}?v=4`
+      ];
+    }
+
+    const baseCol = formattedColors[0] || {};
+    formattedColors = colorNames.map((name, idx) => ({
+      id: `${baseCol.id || 'col_' + prod.id}_${idx}`,
+      name: name,
+      hex: colorHexes[idx % colorHexes.length],
+      image_url: allImageUrls[idx % allImageUrls.length] || primaryImage,
+      sku: baseCol.sku || null,
+      sourceUrl: baseCol.sourceUrl || null,
+      price: baseCol.price || null
+    }));
+  }
 
   return {
     id: prod.id,
@@ -218,41 +269,15 @@ export function formatProductRecord(prod, images = [], colors = [], sizes = [], 
     image: primaryImage,
     images: allImageUrls,
     rawImages: images.map(img => ({ id: img.id, url: img.image_url, colorId: img.color_id })),
-    swatches: colors.map(c => c.hex_code).filter(Boolean),
-    colors: (() => {
-      let formattedColors = colors.map(c => ({
-        id: c.id,
-        name: c.name,
-        hex: c.hex_code || '#151616',
-        image_url: c.image_url,
-        sku: c.sku || null,
-        sourceUrl: c.source_url || null,
-        price: c.price ? parseFloat(c.price) : null
-      }));
-
-      if ((formattedColors.length === 0 || (formattedColors.length === 1 && (formattedColors[0].name.toLowerCase() === 'default color' || formattedColors[0].name.toLowerCase() === 'unknown'))) && allImageUrls.length > 1) {
-        const isDenim = prod.category === 'Denim' || (prod.name || '').toLowerCase().includes('jean') || (prod.name || '').toLowerCase().includes('denim');
-        const colorNames = isDenim
-          ? ['Light Wash', 'Medium Wash', 'Classic Blue', 'Dark Wash', 'Vintage Wash']
-          : ['Shade 1', 'Shade 2', 'Shade 3', 'Shade 4', 'Shade 5'];
-        const colorHexes = isDenim
-          ? ['#64B5F6', '#1E88E5', '#0D47A1', '#3F51B5', '#1A237E']
-          : ['#64B5F6', '#151616', '#E0E0E0', '#9C27B0', '#FF9800'];
-
-        const baseCol = formattedColors[0] || {};
-        formattedColors = allImageUrls.map((imgUrl, idx) => ({
-          id: `${baseCol.id || 'col_' + prod.id}_${idx}`,
-          name: colorNames[idx % colorNames.length],
-          hex: colorHexes[idx % colorHexes.length],
-          image_url: imgUrl,
-          sku: baseCol.sku || null,
-          sourceUrl: baseCol.sourceUrl || null,
-          price: baseCol.price || null
-        }));
-      }
-      return formattedColors;
-    })(),
-    sizes: sizes.map(s => ({ id: s.id, name: s.name, available: Boolean(s.available) })),
+    swatches: formattedColors.map(c => c.hex).filter(Boolean),
+    colors: formattedColors,
+    sizes: sizes.length > 0 ? sizes.map(s => ({ id: s.id, name: s.name, available: Boolean(s.available) })) : [
+      { name: 'XS', available: true },
+      { name: 'S', available: true },
+      { name: 'M', available: true },
+      { name: 'L', available: true },
+      { name: 'XL', available: true }
+    ],
     reviews: reviews.map(r => ({ id: r.id, author: r.author, rating: parseFloat(r.rating), comment: r.comment }))
   };
 }
