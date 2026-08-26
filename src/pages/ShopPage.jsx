@@ -6,61 +6,40 @@ import { ProductSkeleton } from '../components/ui/ProductSkeleton';
 export function ShopPage() {
   const { categoryFilter, setCategoryFilter, dbProducts, isDbLoading } = useShop();
 
-  const defaultCategoryImages = {
-    Dresses: 'https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/11/6980031/1.jpg?2180',
-    Hoodies: 'https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/27/2994431/1.jpg?9775',
-    DENIM: 'https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/51/1338331/1.jpg?1811',
-    Tops: 'https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/22/1609621/1.jpg?4327',
-    Suits: 'https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/31/9182231/1.jpg?4777'
+  const FULL_BLEED_CATEGORY_IMAGES = {
+    Dresses: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800&auto=format&fit=crop',
+    Hoodies: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop',
+    DENIM: 'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&auto=format&fit=crop',
+    Tops: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&auto=format&fit=crop',
+    Suits: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&auto=format&fit=crop'
   };
-
-  const dynamicCategoryImages = useMemo(() => {
-    const categories = ['Dresses', 'Hoodies', 'DENIM', 'Tops', 'Suits'];
-    const result = {};
-
-    categories.forEach(cat => {
-      const matchingProds = (dbProducts || []).filter(
-        p => p.category && p.category.toLowerCase() === cat.toLowerCase() && (p.image || (p.images && p.images[0]))
-      );
-
-      if (matchingProds.length > 0) {
-        const randomIndex = Math.floor(Math.random() * matchingProds.length);
-        const selectedProd = matchingProds[randomIndex];
-        result[cat] = selectedProd.image || (selectedProd.images && selectedProd.images[0]);
-      } else {
-        result[cat] = defaultCategoryImages[cat];
-      }
-    });
-
-    return result;
-  }, [dbProducts]);
 
   const mainFeatureCategory = {
     name: 'Dresses',
-    image: dynamicCategoryImages.Dresses,
+    image: FULL_BLEED_CATEGORY_IMAGES.Dresses,
     fontStyle: 'font-serif italic font-normal'
   };
 
   const gridCategories = [
     {
       name: 'Hoodies',
-      image: dynamicCategoryImages.Hoodies,
+      image: FULL_BLEED_CATEGORY_IMAGES.Hoodies,
       fontStyle: 'font-serif italic font-normal'
     },
     {
       name: 'DENIM',
-      image: dynamicCategoryImages.DENIM,
+      image: FULL_BLEED_CATEGORY_IMAGES.DENIM,
       fontStyle: 'font-serif tracking-widest font-bold uppercase'
     },
     {
       name: 'Tops',
-      image: dynamicCategoryImages.Tops,
+      image: FULL_BLEED_CATEGORY_IMAGES.Tops,
       fontStyle: 'font-serif italic font-normal'
     },
     {
       name: 'Suits',
-      image: dynamicCategoryImages.Suits,
-      fontStyle: 'font-serif italic font-normal'
+      image: FULL_BLEED_CATEGORY_IMAGES.Suits,
+      fontStyle: 'font-serif tracking-widest font-bold uppercase'
     }
   ];
 
