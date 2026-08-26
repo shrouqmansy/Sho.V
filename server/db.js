@@ -177,6 +177,7 @@ export async function initDb() {
 
 export function toThumbnailUrl(url, width = 300) {
   if (!url) return url;
+  if (url.startsWith('/api/images/thumbnail')) return url;
   let targetUrl = url;
   if (url.includes('jumia.is') && url.includes('/fit-in/')) {
     targetUrl = url.replace(/\/fit-in\/\d+x\d+\//, `/fit-in/${width}x${width}/`);
