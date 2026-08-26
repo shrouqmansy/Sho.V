@@ -27,6 +27,11 @@ app.use('/api', inventoryRoutes);
 app.use('/api', recommendationRoutes);
 
 // GET /api/products - Get all products from PostgreSQL
+import { handleImageThumbnailProxy } from './image_proxy.js';
+
+// GET /api/images/thumbnail - Controlled Cached Image Proxy Endpoint
+app.get('/api/images/thumbnail', handleImageThumbnailProxy);
+
 app.get('/api/products', async (req, res) => {
   try {
     const { category, limit, offset } = req.query;

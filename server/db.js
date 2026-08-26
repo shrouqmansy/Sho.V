@@ -176,14 +176,14 @@ export async function initDb() {
 }
 
 export function toThumbnailUrl(url, width = 300) {
-  if (!url || typeof url !== 'string') return url;
+  if (!url) return url;
+  let targetUrl = url;
   if (url.includes('jumia.is') && url.includes('/fit-in/')) {
-    return url.replace(/\/fit-in\/\d+x\d+\//, `/fit-in/${width}x${width}/`);
+    targetUrl = url.replace(/\/fit-in\/\d+x\d+\//, `/fit-in/${width}x${width}/`);
+  } else if (url.includes('unsplash.com')) {
+    targetUrl = url.replace(/w=\d+/, `w=${width}`);
   }
-  if (url.includes('unsplash.com')) {
-    return url.replace(/w=\d+/, `w=${width}`);
-  }
-  return url;
+  return `/api/images/thumbnail?url=${encodeURIComponent(targetUrl)}`;
 }
 
 export function formatProductRecord(prod, images = [], colors = [], sizes = [], reviews = []) {
