@@ -2,6 +2,17 @@ import React, { useState } from 'react';
 import { useShop } from '../../context/ShopContext';
 import { getSwatchStyle } from '../../utils/swatchResolver';
 
+import { getApiBaseUrl } from '../../data/products';
+
+export function resolveImageUrl(url) {
+  if (!url) return url;
+  if (url.startsWith('/api/')) {
+    const apiOrigin = getApiBaseUrl().replace(/\/api\/?$/, '');
+    return `${apiOrigin}${url}`;
+  }
+  return url;
+}
+
 export function ProductCard({ product, isLarge = false }) {
   const { formatPrice, addToCart, openProduct, isFavorite, toggleFavorite } = useShop();
 
@@ -14,8 +25,9 @@ export function ProductCard({ product, isLarge = false }) {
   const selectedColor = product.colors && product.colors[selectedColorIdx];
   const imagesList = product.images && product.images.length > 0 ? product.images : [product.image];
 
-  // Dynamic image switching: Read activeImageIndex so photo refreshes when navigating arrows/thumbnails/colors
-  const currentImage = imagesList[activeImageIndex] || (selectedColor && selectedColor.image_url) || product.image;
+  // Dynamic image switching with absolute API URL resolution for 100% fail-safe image delivery
+  const rawCurrentImage = imagesList[activeImageIndex] || (selectedColor && selectedColor.image_url) || product.image;
+  const currentImage = resolveImageUrl(rawCurrentImage);
 
   const showSaleBadge = Boolean(product.isSale && product.originalPrice);
   const showNewBadge = Boolean(product.isNew && !showSaleBadge);
