@@ -69,8 +69,9 @@ export function ShopProvider({ children }) {
   };
 
   useEffect(() => {
-    refreshProductsFromDb(categoryFilter, true);
-  }, [categoryFilter]);
+    const targetCat = (activePage === 'collection' && selectedCollection) ? selectedCollection : categoryFilter;
+    refreshProductsFromDb(targetCat, true);
+  }, [categoryFilter, selectedCollection, activePage]);
 
   // Execute Search or Browser Agent Discovery
   const executeSearch = async (queryStr) => {
@@ -251,10 +252,13 @@ export function ShopProvider({ children }) {
   };
 
   const openCollection = (collectionName) => {
-    updateBrowserHistory('collection', categoryFilter, null, collectionName);
+    const catName = collectionName === 'New in' ? 'All' : collectionName;
+    updateBrowserHistory('collection', catName, null, collectionName);
     setSelectedCollection(collectionName);
+    setCategoryFilter(catName);
     setSelectedProduct(null);
     setActivePage('collection');
+    refreshProductsFromDb(catName, true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

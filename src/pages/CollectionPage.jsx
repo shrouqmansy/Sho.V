@@ -7,10 +7,14 @@ export function CollectionPage() {
 
   const collectionName = selectedCollection || 'All Collections';
 
+  const categoryMatches = selectedCollection && selectedCollection !== 'New in'
+    ? dbProducts.filter(p => p.category && p.category.toLowerCase() === selectedCollection.toLowerCase())
+    : [];
+
   const filteredProducts = selectedCollection
     ? (selectedCollection === 'New in'
         ? dbProducts.filter(p => p.isNew)
-        : dbProducts.filter(p => p.category && p.category.toLowerCase() === selectedCollection.toLowerCase()))
+        : (categoryMatches.length > 0 ? categoryMatches : dbProducts))
     : dbProducts;
 
   return (
