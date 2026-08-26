@@ -124,14 +124,8 @@ export function SearchModal() {
             <div className="space-y-4 my-2">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-[#e2ded9] pb-2 gap-2">
                 <span className="text-xs uppercase tracking-widest text-gray-600 font-semibold">
-                  Found {searchResults.length} Relevant Products (Ranked by Relevance)
+                  Found {searchResults.length} Products
                 </span>
-
-                {triggeredAgentState && (
-                  <span className="bg-[#bc9c85] text-white text-[10px] uppercase tracking-widest px-2.5 py-1 font-bold inline-block">
-                    ★ Discovered via Scraper & Saved to PostgreSQL
-                  </span>
-                )}
               </div>
 
               <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
@@ -145,14 +139,14 @@ export function SearchModal() {
           ) : inputVal.trim() ? (
             /* STATE 5: NO RESULTS FOUND STATE */
             <div className="py-12 text-center text-gray-500 text-sm bg-white border border-[#e2ded9] my-4 p-6 space-y-2">
-              <p className="font-serif text-lg text-[#151616] uppercase tracking-wider">No Relevant Products Found</p>
+              <p className="font-serif text-lg text-[#151616] uppercase tracking-wider">No Products Found</p>
               <p className="text-xs text-gray-500 font-light">
-                No matching clothing products met relevance criteria for "{inputVal}". Try searching for specific items like "Mesh Cover Up", "Black Oversized Hoodie", "Summer Dress", or "Tailored Blazer".
+                No matching clothing products found for "{inputVal}". Try searching for specific items like "Hoodie", "Dress", or "Blazer".
               </p>
             </div>
           ) : (
             <div className="py-8 text-center text-gray-400 text-xs uppercase tracking-widest">
-              Enter a search query above to browse PostgreSQL database or trigger web discovery.
+              Enter a search query above to search products.
             </div>
           )}
         </div>

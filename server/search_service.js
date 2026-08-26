@@ -53,27 +53,6 @@ export async function searchOrDiscoverProducts(searchQuery, sessionId = null, us
     logSearchEvent(effectiveSessionId, userId, queryClean, intent, rankedDbResults.length);
   });
 
-  // If Database contains matches or catalog items -> return database results immediately (< 50ms)
-  // If DB results are sparse (< 3), launch scraper fallback in the BACKGROUND (non-blocking)
-  let scrapingInBackground = false;
-
-  if (rankedDbResults.length < 3) {
-    scrapingInBackground = true;
-    console.log(`[Intelligent Search STAGE 2] Triggering Scraper Fallback in BACKGROUND for '${queryClean}'...`);
-    
-    setImmediate(async () => {
-      try {
-        const expandedScraperQuery = buildScraperSearchQuery(intent);
-        const categoryMatch = (intent.garment || 'TOPS').toUpperCase();
-        console.log(`[Background Scraper] Querying web for '${expandedScraperQuery}'...`);
-        const discoveredItems = await discoveryService.discoverProducts(expandedScraperQuery, categoryMatch);
-        console.log(`[Background Scraper Complete] Extracted & saved ${discoveredItems.length} new products into PostgreSQL.`);
-      } catch (sErr) {
-        console.warn('[Background Scraper Error]:', sErr.message);
-      }
-    });
-  }
-
   // Fallback to wider catalog if exact search yielded 0 items so customer ALWAYS sees products immediately!
   let returnProducts = rankedDbResults;
   if (returnProducts.length === 0) {
