@@ -171,9 +171,21 @@ export async function initDb() {
   console.log('PostgreSQL database schemas ready.');
 }
 
+export function toThumbnailUrl(url, width = 300) {
+  if (!url || typeof url !== 'string') return url;
+  if (url.includes('jumia.is') && url.includes('/fit-in/')) {
+    return url.replace(/\/fit-in\/\d+x\d+\//, `/fit-in/${width}x${width}/`);
+  }
+  if (url.includes('unsplash.com')) {
+    return url.replace(/w=\d+/, `w=${width}`);
+  }
+  return url;
+}
+
 export function formatProductRecord(prod, images = [], colors = [], sizes = [], reviews = []) {
-  const primaryImage = colors.length > 0 && colors[0].image_url ? colors[0].image_url : (images.length > 0 ? images[0].image_url : (prod.image_url || 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop'));
-  const allImageUrls = images.map(img => img.image_url);
+  const rawPrimaryImage = colors.length > 0 && colors[0].image_url ? colors[0].image_url : (images.length > 0 ? images[0].image_url : (prod.image_url || 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop'));
+  const primaryImage = toThumbnailUrl(rawPrimaryImage, 300);
+  const allImageUrls = images.map(img => toThumbnailUrl(img.image_url, 300));
   if (allImageUrls.length === 0) allImageUrls.push(primaryImage);
 
   return {

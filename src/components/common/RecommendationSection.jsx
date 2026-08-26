@@ -3,6 +3,8 @@ import { ProductCard } from '../ui/ProductCard';
 import { useAuth } from '../../context/AuthContext';
 import { getApiBaseUrl } from '../../data/products';
 
+import { ProductSkeleton } from '../ui/ProductSkeleton';
+
 export function RecommendationSection({
   title = "Recommended For You",
   subtitle = "Curated AI recommendations matching your style profile",
@@ -88,9 +90,9 @@ export function RecommendationSection({
 
       {/* Grid of Recommendation Items */}
       {isLoading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 animate-pulse">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 sm:gap-x-6 gap-y-8 sm:gap-y-12">
           {[1, 2, 3, 4].map(i => (
-            <div key={i} className="bg-gray-100 aspect-[3/4] border border-gray-200" />
+            <ProductSkeleton key={i} />
           ))}
         </div>
       ) : (

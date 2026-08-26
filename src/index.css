@@ -46,7 +46,7 @@ h1, h2, h3, h4, h5, h6, .font-serif {
   transform-origin: bottom left;
 }
 
-/* Hide scrollbar utility */
+/* Hide scrollbar utility with touch momentum scrolling */
 .no-scrollbar::-webkit-scrollbar,
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
@@ -55,6 +55,8 @@ h1, h2, h3, h4, h5, h6, .font-serif {
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
 }
 
 /* Horizontal Infinite Marquee */

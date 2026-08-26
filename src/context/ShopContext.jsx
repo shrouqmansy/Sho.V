@@ -53,8 +53,10 @@ export function ShopProvider({ children }) {
     };
   });
 
-  // Fetch initial catalog from PostgreSQL database
-  const refreshProductsFromDb = async (cat = categoryFilter) => {
+  // Fetch initial catalog from PostgreSQL database once on mount or explicitly
+  const refreshProductsFromDb = async (cat = 'All', force = false) => {
+    if (!force && dbProducts.length > 0 && cat === 'All') return;
+
     setIsDbLoading(true);
     try {
       const prods = await fetchProductsFromDb(cat);
@@ -67,8 +69,10 @@ export function ShopProvider({ children }) {
   };
 
   useEffect(() => {
-    refreshProductsFromDb(categoryFilter);
-  }, [categoryFilter]);
+    if (dbProducts.length === 0) {
+      refreshProductsFromDb('All');
+    }
+  }, []);
 
   // Execute Search or Browser Agent Discovery
   const executeSearch = async (queryStr) => {
