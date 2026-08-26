@@ -190,59 +190,39 @@ export function toThumbnailUrl(url, width = 300) {
 export function formatProductRecord(prod, images = [], colors = [], sizes = [], reviews = []) {
   const rawPrimaryImage = colors.length > 0 && colors[0].image_url ? colors[0].image_url : (images.length > 0 ? images[0].image_url : (prod.image_url || 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop'));
   const primaryImage = toThumbnailUrl(rawPrimaryImage, 300);
-  let allImageUrls = images.map(img => toThumbnailUrl(img.image_url, 300));
-  if (allImageUrls.length === 0) allImageUrls.push(primaryImage);
 
-  let formattedColors = colors.map(c => ({
+  // Extract unique image URLs from product_images table and colors
+  const rawImageUrls = [];
+  if (images && images.length > 0) {
+    images.forEach(img => {
+      if (img.image_url && !rawImageUrls.includes(img.image_url)) {
+        rawImageUrls.push(img.image_url);
+      }
+    });
+  }
+  if (colors && colors.length > 0) {
+    colors.forEach(c => {
+      if (c.image_url && !rawImageUrls.includes(c.image_url)) {
+        rawImageUrls.push(c.image_url);
+      }
+    });
+  }
+  if (rawImageUrls.length === 0 && prod.image_url) {
+    rawImageUrls.push(prod.image_url);
+  }
+
+  const allImageUrls = rawImageUrls.map(url => toThumbnailUrl(url, 300));
+
+  // Format authentic colors directly from PostgreSQL
+  const formattedColors = colors.map(c => ({
     id: c.id,
     name: c.name,
     hex: c.hex_code || '#151616',
-    image_url: c.image_url,
+    image_url: c.image_url ? toThumbnailUrl(c.image_url, 300) : primaryImage,
     sku: c.sku || null,
     sourceUrl: c.source_url || null,
     price: c.price ? parseFloat(c.price) : null
   }));
-
-  if (formattedColors.length <= 1) {
-    const isDenim = prod.category === 'Denim' || (prod.name || '').toLowerCase().includes('jean') || (prod.name || '').toLowerCase().includes('denim');
-    const isDress = prod.category === 'Dresses' || (prod.name || '').toLowerCase().includes('dress');
-    const isSuit = prod.category === 'Suits' || (prod.name || '').toLowerCase().includes('suit') || (prod.name || '').toLowerCase().includes('blazer');
-
-    let colorNames = ['Noir', 'Oatmeal', 'Blush Rose', 'Midnight Navy'];
-    let colorHexes = ['#151616', '#E4D5C7', '#D8A7B1', '#1B263B'];
-
-    if (isDenim) {
-      colorNames = ['Light Wash', 'Medium Indigo', 'Dark Denim', 'Washed Black'];
-      colorHexes = ['#7FA6C8', '#3B6084', '#1F344D', '#2B2D2F'];
-    } else if (isDress) {
-      colorNames = ['Noir Black', 'Burgundy', 'Champagne', 'Emerald'];
-      colorHexes = ['#151616', '#6B1D2F', '#E5D4C0', '#1B4931'];
-    } else if (isSuit) {
-      colorNames = ['Taupe Beige', 'Charcoal', 'Midnight Blue', 'Sand'];
-      colorHexes = ['#C4B5A5', '#333333', '#1A2536', '#D6C7B2'];
-    }
-
-    if (allImageUrls.length <= 1) {
-      const baseImg = primaryImage;
-      allImageUrls = [
-        baseImg,
-        baseImg.includes('?') ? `${baseImg}&v=2` : `${baseImg}?v=2`,
-        baseImg.includes('?') ? `${baseImg}&v=3` : `${baseImg}?v=3`,
-        baseImg.includes('?') ? `${baseImg}&v=4` : `${baseImg}?v=4`
-      ];
-    }
-
-    const baseCol = formattedColors[0] || {};
-    formattedColors = colorNames.map((name, idx) => ({
-      id: `${baseCol.id || 'col_' + prod.id}_${idx}`,
-      name: name,
-      hex: colorHexes[idx % colorHexes.length],
-      image_url: allImageUrls[idx % allImageUrls.length] || primaryImage,
-      sku: baseCol.sku || null,
-      sourceUrl: baseCol.sourceUrl || null,
-      price: baseCol.price || null
-    }));
-  }
 
   return {
     id: prod.id,
