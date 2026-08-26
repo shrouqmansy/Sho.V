@@ -69,10 +69,8 @@ export function ShopProvider({ children }) {
   };
 
   useEffect(() => {
-    if (dbProducts.length === 0) {
-      refreshProductsFromDb('All');
-    }
-  }, []);
+    refreshProductsFromDb(categoryFilter, true);
+  }, [categoryFilter]);
 
   // Execute Search or Browser Agent Discovery
   const executeSearch = async (queryStr) => {
