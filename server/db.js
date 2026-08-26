@@ -178,7 +178,7 @@ export async function initDb() {
     WHERE product_id = 'prod_b6d9520932e82f58' AND (name ILIKE 'purple' OR hex_code ILIKE '#7B1FA2');
   `);
 
-  // Replace low-quality flat-lay table photos with high-fashion editorial model photos
+  // Replace low-quality flat-lay table photos with verified female fashion model photos
   await query(`
     UPDATE products 
     SET image_url = 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&auto=format&fit=crop' 
@@ -192,24 +192,6 @@ export async function initDb() {
   `);
 
   await query(`
-    UPDATE products 
-    SET image_url = 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=800&auto=format&fit=crop' 
-    WHERE id = 'prod_4530284d5977b04d' OR name ILIKE '%M Sou Women Blazer Jacket%';
-  `);
-
-  await query(`
-    UPDATE product_images 
-    SET image_url = 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=800&auto=format&fit=crop' 
-    WHERE product_id = 'prod_4530284d5977b04d';
-  `);
-
-  await query(`
-    UPDATE product_colors 
-    SET image_url = 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=800&auto=format&fit=crop' 
-    WHERE product_id = 'prod_4530284d5977b04d';
-  `);
-
-  await query(`
     UPDATE product_colors 
     SET image_url = 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&auto=format&fit=crop' 
     WHERE product_id = 'prod_083966b28f77968e';
@@ -217,19 +199,37 @@ export async function initDb() {
 
   await query(`
     UPDATE products 
-    SET image_url = 'https://images.unsplash.com/photo-1548624149-f1e948c2a8f8?w=800&auto=format&fit=crop' 
+    SET image_url = 'https://images.unsplash.com/photo-1584273143981-41c073dfe8f8?w=800&auto=format&fit=crop' 
+    WHERE id = 'prod_4530284d5977b04d' OR name ILIKE '%M Sou Women Blazer Jacket%';
+  `);
+
+  await query(`
+    UPDATE product_images 
+    SET image_url = 'https://images.unsplash.com/photo-1584273143981-41c073dfe8f8?w=800&auto=format&fit=crop' 
+    WHERE product_id = 'prod_4530284d5977b04d';
+  `);
+
+  await query(`
+    UPDATE product_colors 
+    SET image_url = 'https://images.unsplash.com/photo-1584273143981-41c073dfe8f8?w=800&auto=format&fit=crop' 
+    WHERE product_id = 'prod_4530284d5977b04d';
+  `);
+
+  await query(`
+    UPDATE products 
+    SET image_url = 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&auto=format&fit=crop' 
     WHERE id = 'prod_aa9b96bb4ef1be43' OR (name ILIKE '%M Sou%' AND name ILIKE '%long sleeves%');
   `);
 
   await query(`
     UPDATE product_images 
-    SET image_url = 'https://images.unsplash.com/photo-1548624149-f1e948c2a8f8?w=800&auto=format&fit=crop' 
+    SET image_url = 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&auto=format&fit=crop' 
     WHERE product_id = 'prod_aa9b96bb4ef1be43';
   `);
 
   await query(`
     UPDATE product_colors 
-    SET image_url = 'https://images.unsplash.com/photo-1548624149-f1e948c2a8f8?w=800&auto=format&fit=crop' 
+    SET image_url = 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&auto=format&fit=crop' 
     WHERE product_id = 'prod_aa9b96bb4ef1be43';
   `);
 
