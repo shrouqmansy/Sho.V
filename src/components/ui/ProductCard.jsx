@@ -101,7 +101,14 @@ export function ProductCard({ product, isLarge = false }) {
           </div>
         )}
 
-        {/* Wishlist Button */}
+        {/* Source Website Tag */}
+        {product.sourceWebsite && product.sourceWebsite !== 'Sho.V Archive' && (
+          <div className="absolute top-3 right-10 bg-black/70 text-white px-2 py-0.5 text-[8px] font-medium tracking-wider uppercase backdrop-blur-sm truncate max-w-[100px]">
+            {product.sourceWebsite}
+          </div>
+        )}
+
+        {/* Wishlist Button - NO WHITE BACKGROUND BOX */}
         <button
           onClick={(e) => {
             e.stopPropagation();

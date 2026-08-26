@@ -93,19 +93,19 @@ export function ShopPage() {
             </h2>
           </div>
 
-          {/* Main Hero Category Card (Dresses) */}
+          {/* Feature Category Banner (Dresses) */}
           <div
             onClick={() => setCategoryFilter(mainFeatureCategory.name)}
-            className="w-full aspect-[21/9] bg-white relative overflow-hidden cursor-pointer group shadow-sm border border-[#e2ded9]"
+            className="w-full aspect-[16/10] sm:aspect-[21/9] bg-white relative overflow-hidden cursor-pointer group shadow-sm border border-[#e2ded9]"
           >
             <img
               src={mainFeatureCategory.image}
               alt={mainFeatureCategory.name}
-              className="w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-700 ease-in-out"
+              className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-700 ease-in-out"
             />
-            <div className="absolute inset-0 bg-black/35 group-hover:bg-black/45 transition-colors duration-300" />
-            <div className="absolute inset-0 flex items-center justify-center text-center p-4">
-              <h2 className={`text-4xl sm:text-6xl md:text-7xl text-white drop-shadow-md tracking-wider ${mainFeatureCategory.fontStyle}`}>
+            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300" />
+            <div className="absolute inset-0 flex items-center justify-center text-center p-2 sm:p-4">
+              <h2 className={`text-3xl sm:text-5xl md:text-6xl text-white drop-shadow-lg tracking-wide ${mainFeatureCategory.fontStyle}`}>
                 {mainFeatureCategory.name}
               </h2>
             </div>
@@ -172,9 +172,6 @@ export function ShopPage() {
           <h1 className="font-serif text-3xl md:text-5xl text-[#151616] uppercase tracking-wider font-light">
             {categoryFilter === 'All' ? "All Women's Products" : categoryFilter} ({categoryProducts.length} Items)
           </h1>
-          <p className="text-xs text-gray-500 mt-1 font-light">
-            Showing initial 12 of {categoryProducts.length} items
-          </p>
         </div>
 
         {isDbLoading ? (
@@ -185,7 +182,7 @@ export function ShopPage() {
           </div>
         ) : categoryProducts.length === 0 ? (
           <div className="py-20 text-center text-gray-500 text-sm">
-            No products currently available in {categoryFilter}. Use search to trigger Product Discovery Service!
+            No products currently available in {categoryFilter}.
           </div>
         ) : (
           <div className="space-y-10">
