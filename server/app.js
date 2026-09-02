@@ -33,9 +33,10 @@ app.get('/api/images/thumbnail', handleImageThumbnailProxy);
 app.get('/api/products', async (req, res) => {
   try {
     const { category, limit, offset } = req.query;
+    const limitVal = limit ? parseInt(limit, 10) : 0; // 0 means return all matching products
     const products = await getAllProductsFromDb({
       category,
-      limit: limit ? parseInt(limit, 10) : 12,
+      limit: limitVal,
       offset: offset ? parseInt(offset, 10) : 0
     });
     res.json({ success: true, count: products.length, products });

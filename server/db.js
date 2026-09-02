@@ -106,12 +106,14 @@ export async function initDb() {
       video_url TEXT,
       is_new BOOLEAN DEFAULT false,
       is_sale BOOLEAN DEFAULT false,
+      image_url TEXT,
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       CONSTRAINT unique_source_item UNIQUE(source, source_product_id)
     );
   `);
 
+  await query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS image_url TEXT;`);
   await query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS discount_price NUMERIC;`);
   await query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS discount_percentage INTEGER;`);
   await query(`ALTER TABLE products ADD COLUMN IF NOT EXISTS source_website TEXT;`);
@@ -370,8 +372,12 @@ export async function getAllProductsFromDb(options = {}) {
     params.push(category);
   }
 
-  sql += ` ORDER BY created_at DESC LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
-  params.push(limit, offset);
+  if (limit && limit > 0) {
+    sql += ` ORDER BY created_at DESC LIMIT $${params.length + 1} OFFSET $${params.length + 2}`;
+    params.push(limit, offset);
+  } else {
+    sql += ` ORDER BY created_at DESC`;
+  }
 
   const res = await query(sql, params);
   if (res.rows.length === 0) return [];

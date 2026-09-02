@@ -148,19 +148,22 @@ export function ShopPage() {
         >
           All Women's Products ({dbProducts.length})
         </button>
-        {activeCategoriesList.map(cat => (
-          <button
-            key={cat}
-            onClick={() => setCategoryFilter(cat)}
-            className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-full border transition-colors ${
-              categoryFilter === cat
-                ? 'bg-[#151616] text-white border-[#151616]'
-                : 'bg-white text-[#151616] border-[#e2ded9] hover:border-[#151616]'
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+        {activeCategoriesList.map(cat => {
+          const count = dbProducts.filter(p => p.category && p.category.toLowerCase() === cat.toLowerCase()).length;
+          return (
+            <button
+              key={cat}
+              onClick={() => setCategoryFilter(cat)}
+              className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-full border transition-colors ${
+                categoryFilter === cat
+                  ? 'bg-[#151616] text-white border-[#151616]'
+                  : 'bg-white text-[#151616] border-[#e2ded9] hover:border-[#151616]'
+              }`}
+            >
+              {cat} ({count})
+            </button>
+          );
+        })}
       </div>
 
       {/* 3. PRODUCT CATALOG GRID */}

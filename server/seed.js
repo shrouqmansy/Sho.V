@@ -16,6 +16,10 @@ export async function runScrapingPipeline(options = {}) {
   // STEP 1: RESET POSTGRESQL DATABASE
   await initDb();
   console.log('\n[STAGE 1] Wiping all existing records from PostgreSQL database...');
+  try { await query(`DELETE FROM order_items`); } catch (e) {}
+  try { await query(`DELETE FROM orders`); } catch (e) {}
+  try { await query(`DELETE FROM inventory_reservations`); } catch (e) {}
+  try { await query(`DELETE FROM product_skus`); } catch (e) {}
   await query(`DELETE FROM product_reviews`);
   await query(`DELETE FROM product_sizes`);
   await query(`DELETE FROM product_colors`);
@@ -46,11 +50,19 @@ export async function runScrapingPipeline(options = {}) {
       const sqlDumpPath = path.resolve(process.cwd(), 'server', 'database_dump.sql');
       if (fs.existsSync(sqlDumpPath)) {
         const sqlDump = fs.readFileSync(sqlDumpPath, 'utf-8');
-        await query(sqlDump);
+        const statements = sqlDump.split(/;\r?\n/);
+        for (const stmt of statements) {
+          const trimmed = stmt.trim();
+          if (trimmed && !trimmed.startsWith('--')) {
+            try {
+              await query(trimmed);
+            } catch (e) {}
+          }
+        }
         const countRes = await query(`SELECT COUNT(*) FROM products`);
         const total = parseInt(countRes.rows[0].count, 10);
         console.log(`[STAGE 2 FALLBACK COMPLETE] Inserted ${total} catalog products into PostgreSQL from database_dump.sql.`);
-        return total;
+        if (total > 0) return total;
       }
     } catch (sqlErr) {
       console.warn('[STAGE 2 FALLBACK Note]: SQL dump fallback warning:', sqlErr.message);
